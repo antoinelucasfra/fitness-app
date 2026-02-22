@@ -1,0 +1,10 @@
+name: flo-fit
+title: Flo Fit
+username: antoinelucasfra
+account: antoinelucasfra
+server: connect.posit.cloud
+hostUrl: https://api.connect.posit.cloud/v1
+appId: 019c8665-051b-8cb9-da1b-d7af46a012ac
+bundleId:
+url: https://connect.posit.cloud/antoinelucasfra/content/019c8665-051b-8cb9-da1b-d7af46a012ac
+version: 1
