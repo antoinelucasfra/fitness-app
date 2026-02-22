@@ -7,9 +7,9 @@ mod_workout_log_ui <- function(id) {
     shiny::div(class = "section-title", "📝 Log Workout"),
     shiny::div(class = "section-subtitle", "Record your training session"),
 
-    shiny::fluidRow(
+    shiny::div(class = "row g-3",
       # ── Entry form ──────────────────────────────────────────────────────
-      shiny::column(4,
+      shiny::div(class = "col-12 col-md-4",
         shiny::div(class = "panel-card",
           shiny::h5("New Session"),
 
@@ -90,7 +90,7 @@ mod_workout_log_ui <- function(id) {
       ),
 
       # ── Session builder ──────────────────────────────────────────────────
-      shiny::column(8,
+      shiny::div(class = "col-12 col-md-8",
         shiny::div(class = "panel-card",
           shiny::h5("Today's Session"),
           shiny::div(
@@ -113,18 +113,18 @@ mod_workout_log_ui <- function(id) {
 
         shiny::div(class = "panel-card",
           shiny::h5("📚 Full History"),
-          shiny::fluidRow(
-            shiny::column(4,
+          shiny::div(class = "row g-2",
+            shiny::div(class = "col-12 col-md-4",
               shiny::dateRangeInput(ns("hist_range"), "Date range",
                                    start = Sys.Date() - 30, end = Sys.Date(),
                                    format = "dd/mm/yyyy", separator = " to ")
             ),
-            shiny::column(3,
+            shiny::div(class = "col-12 col-md-3",
               shiny::selectInput(ns("hist_type"), "Type",
                                  choices = c("All", "strength", "cardio"),
                                  selected = "All")
             ),
-            shiny::column(5,
+            shiny::div(class = "col-12 col-md-5",
               shiny::br(),
               shiny::actionButton(ns("delete_selected"), "🗑 Delete Selected",
                                   class = "btn btn-outline-light btn-sm")

@@ -7,9 +7,9 @@ mod_goals_ui <- function(id) {
     shiny::div(class = "section-title", "🎯 Goals"),
     shiny::div(class = "section-subtitle", "Set targets and smash them"),
 
-    shiny::fluidRow(
+    shiny::div(class = "row g-3",
       # ── Add goal form ──────────────────────────────────────────────────────
-      shiny::column(4,
+      shiny::div(class = "col-12 col-md-4",
         shiny::div(class = "panel-card",
           shiny::h5("New Goal"),
 
@@ -23,12 +23,12 @@ mod_goals_ui <- function(id) {
                                "Consistency" = "consistency"
                              ),
                              selected = "strength"),
-          shiny::fluidRow(
-            shiny::column(6,
+          shiny::div(class = "row g-2",
+            shiny::div(class = "col-6",
               shiny::numericInput(ns("goal_target"), "Target",
                                   value = 100, min = 0, step = 0.1)
             ),
-            shiny::column(6,
+            shiny::div(class = "col-6",
               shiny::textInput(ns("goal_unit"), "Unit",
                                placeholder = "kg / km / %")
             )
@@ -45,7 +45,7 @@ mod_goals_ui <- function(id) {
       ),
 
       # ── Active goals ───────────────────────────────────────────────────────
-      shiny::column(8,
+      shiny::div(class = "col-12 col-md-8",
         shiny::div(class = "panel-card",
           shiny::h5("Active Goals"),
           shiny::uiOutput(ns("goals_list"))
@@ -58,25 +58,25 @@ mod_goals_ui <- function(id) {
     ),
 
     # ── Update / edit a goal ──────────────────────────────────────────────
-    shiny::fluidRow(
-      shiny::column(12,
+    shiny::div(class = "row g-3",
+      shiny::div(class = "col-12",
         shiny::div(class = "panel-card",
           shiny::h5("✏\ufe0f Update Progress"),
-          shiny::fluidRow(
-            shiny::column(4,
+          shiny::div(class = "row g-2 goals-update-row",
+            shiny::div(class = "col-12 col-md-4",
               shiny::selectInput(ns("update_goal_id"), "Select Goal",
                                  choices = c("(no goals yet)"), width = "100%")
             ),
-            shiny::column(3,
+            shiny::div(class = "col-12 col-md-3",
               shiny::numericInput(ns("update_value"), "New Current Value",
                                   value = 0, min = 0, step = 0.1)
             ),
-            shiny::column(2,
+            shiny::div(class = "col-6 col-md-2 goals-btn-row",
               shiny::br(),
               shiny::actionButton(ns("update_goal"), "💾 Update",
                                   class = "btn btn-success")
             ),
-            shiny::column(3,
+            shiny::div(class = "col-6 col-md-3 goals-btn-row",
               shiny::br(),
               shiny::actionButton(ns("delete_goal"), "🗑 Delete Goal",
                                   class = "btn btn-outline-light")

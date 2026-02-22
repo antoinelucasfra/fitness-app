@@ -14,13 +14,14 @@
   --warning:      #f5a623;
   --radius:       12px;
   --shadow:       0 8px 32px rgba(0,0,0,0.5);
+  --mob-nav-h:    56px;
 }
 
 /* ── Base ──────────────────────────────────────────────────────────────── */
 body {
   background-color: var(--bg-deep) !important;
   color: var(--text-main) !important;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
 }
 
@@ -381,8 +382,178 @@ table.dataTable tbody td {
   border-color: var(--accent1) !important;
 }
 
-/* ── Responsive ────────────────────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .stat-card .stat-value { font-size: 1.5rem; }
-  .section-title { font-size: 1.2rem; }
+/* ══════════════════════════════════════════════════════════════════════════
+   MOBILE BOTTOM NAVIGATION BAR
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Hidden by default — shown only on mobile */
+.mobile-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 767px) {
+
+  /* ── Show bottom nav bar ────────────────────────────────────────────── */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--mob-nav-h);
+    background: #16213e;
+    border-top: 1px solid var(--border);
+    z-index: 1055;
+    justify-content: space-around;
+    align-items: stretch;
+    /* safe-area-inset for notched phones (iPhone X+) */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .mobile-bottom-nav .mob-nav-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    border-top: 2px solid transparent;
+    color: var(--text-muted);
+    font-size: 1.45rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: color 0.18s, background 0.18s, border-color 0.18s;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-bottom-nav .mob-nav-btn.mob-active {
+    color: var(--accent1);
+    border-top-color: var(--accent1);
+    background: rgba(233,69,96,0.08);
+  }
+
+  .mobile-bottom-nav .mob-nav-btn:active {
+    background: rgba(233,69,96,0.18);
+  }
+
+  /* ── Clear content above the bottom nav ───────────────────────────── */
+  .main-content-wrap {
+    padding-bottom: calc(var(--mob-nav-h) + 12px) !important;
+  }
+
+  /* ── Reduce outer padding on small screens ─────────────────────────── */
+  .main-content-wrap {
+    padding: 0.9rem 0.9rem calc(var(--mob-nav-h) + 12px) !important;
+  }
+
+  /* ── Panel cards ────────────────────────────────────────────────────── */
+  .panel-card {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  .panel-card h4, .panel-card h5 {
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── Stat cards ─────────────────────────────────────────────────────── */
+  .stat-card {
+    padding: 1rem;
+  }
+  .stat-card .stat-value {
+    font-size: 1.5rem;
+  }
+  .stat-card .stat-icon {
+    font-size: 1.6rem;
+    margin-bottom: 0.3rem;
+  }
+  .stat-card .stat-label {
+    font-size: 0.75rem;
+  }
+
+  /* ── Section titles ─────────────────────────────────────────────────── */
+  .section-title    { font-size: 1.2rem; margin-bottom: 0.2rem; }
+  .section-subtitle { font-size: 0.82rem; margin-bottom: 1rem; }
+
+  /* ── Touch targets — all buttons ≥ 44px ─────────────────────────────── */
+  .btn {
+    min-height: 44px;
+  }
+  .btn-sm {
+    min-height: 38px !important;
+    padding: 0.45rem 0.8rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* ── DT tables: horizontal scroll on narrow screens ────────────────── */
+  .dataTables_wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* ── Plotly charts: never collapse to zero height ────────────────────── */
+  .js-plotly-plot {
+    min-height: 200px;
+  }
+
+  /* ── Tabset pills: horizontal scroll if tabs overflow ───────────────── */
+  .nav-pills {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .nav-pills .nav-item {
+    flex-shrink: 0;
+  }
+  .nav-pills .nav-link {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem !important;
+  }
+
+  /* ── Motivation banner ──────────────────────────────────────────────── */
+  .motivation-banner {
+    padding: 0.9rem 1rem;
+    margin-bottom: 1rem;
+  }
+  .motivation-banner .quote-text {
+    font-size: 0.92rem;
+  }
+
+  /* ── Goals update row: stack all inputs vertically ──────────────────── */
+  .goals-update-row > .col-4,
+  .goals-update-row > .col-3,
+  .goals-update-row > .col-2 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+  /* Put the two action buttons side by side on mobile */
+  .goals-btn-row > .col-2,
+  .goals-btn-row > .col-3 {
+    width: 50% !important;
+    max-width: 50% !important;
+    flex: 0 0 50% !important;
+  }
+
+  /* ── radioGroupButtons (workout type toggle) ────────────────────────── */
+  .btn-group-sm > .btn {
+    min-height: 38px !important;
+  }
+
+  /* ── Date range input: stack labels ─────────────────────────────────── */
+  .shiny-date-range-input .input-daterange {
+    flex-direction: column;
+  }
+
+  /* ── Numeric spinners: larger touch area ─────────────────────────────── */
+  input[type="number"] {
+    min-height: 40px;
+  }
+}
+
+/* ── Tablet tweaks (768px – 991px) ───────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 991px) {
+  .stat-card .stat-value { font-size: 1.7rem; }
+  .panel-card { padding: 1.2rem; }
 }

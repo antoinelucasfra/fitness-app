@@ -15,29 +15,29 @@ mod_dashboard_ui <- function(id) {
     ),
 
     # Top stat cards row
-    shiny::fluidRow(
-      shiny::column(3,
+    shiny::div(class = "row g-3 mb-3",
+      shiny::div(class = "col-6 col-md-3",
         shiny::div(class = "stat-card",
           shiny::span(class = "stat-icon", "🏋️‍♀️"),
           shiny::div(class = "stat-value", shiny::textOutput(ns("total_sessions"))),
           shiny::div(class = "stat-label", "Total Sessions")
         )
       ),
-      shiny::column(3,
+      shiny::div(class = "col-6 col-md-3",
         shiny::div(class = "stat-card",
           shiny::span(class = "stat-icon", "🔥"),
           shiny::div(class = "stat-value", shiny::textOutput(ns("streak"))),
           shiny::div(class = "stat-label", "Day Streak")
         )
       ),
-      shiny::column(3,
+      shiny::div(class = "col-6 col-md-3",
         shiny::div(class = "stat-card",
           shiny::span(class = "stat-icon", "🏃‍♀️"),
           shiny::div(class = "stat-value", shiny::textOutput(ns("this_week"))),
           shiny::div(class = "stat-label", "This Week")
         )
       ),
-      shiny::column(3,
+      shiny::div(class = "col-6 col-md-3",
         shiny::div(class = "stat-card",
           shiny::span(class = "stat-icon", "🎯"),
           shiny::div(class = "stat-value", shiny::textOutput(ns("goals_done"))),
@@ -48,16 +48,16 @@ mod_dashboard_ui <- function(id) {
 
     shiny::br(),
 
-    shiny::fluidRow(
+    shiny::div(class = "row g-3",
       # Recent workouts
-      shiny::column(7,
+      shiny::div(class = "col-12 col-md-7",
         shiny::div(class = "panel-card",
           shiny::h5("⏱ Recent Workouts"),
           DT::DTOutput(ns("recent_table"))
         )
       ),
       # Weekly calendar / heatmap
-      shiny::column(5,
+      shiny::div(class = "col-12 col-md-5",
         shiny::div(class = "panel-card",
           shiny::h5("📅 Last 4 Weeks"),
           plotly::plotlyOutput(ns("heatmap"), height = "220px")

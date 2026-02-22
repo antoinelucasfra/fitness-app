@@ -15,8 +15,8 @@ mod_progress_ui <- function(id) {
       shiny::tabPanel(
         title = "🏋 Strength",
         shiny::br(),
-        shiny::fluidRow(
-          shiny::column(4,
+        shiny::div(class = "row g-3",
+          shiny::div(class = "col-12 col-md-4",
             shiny::div(class = "panel-card",
               shiny::h5("Exercise"),
               shiny::selectInput(ns("strength_exercise"), NULL,
@@ -32,15 +32,15 @@ mod_progress_ui <- function(id) {
               shiny::uiOutput(ns("strength_pr_box"))
             )
           ),
-          shiny::column(8,
+          shiny::div(class = "col-12 col-md-8",
             shiny::div(class = "panel-card",
               shiny::h5("Progress Over Time"),
               plotly::plotlyOutput(ns("strength_chart"), height = "320px")
             )
           )
         ),
-        shiny::fluidRow(
-          shiny::column(12,
+        shiny::div(class = "row g-3",
+          shiny::div(class = "col-12",
             shiny::div(class = "panel-card",
               shiny::h5("🏆 Personal Records"),
               DT::DTOutput(ns("pr_table"))
@@ -53,8 +53,8 @@ mod_progress_ui <- function(id) {
       shiny::tabPanel(
         title = "🏃 Cardio",
         shiny::br(),
-        shiny::fluidRow(
-          shiny::column(4,
+        shiny::div(class = "row g-3",
+          shiny::div(class = "col-12 col-md-4",
             shiny::div(class = "panel-card",
               shiny::h5("Activity"),
               shiny::selectInput(ns("cardio_exercise"), NULL,
@@ -70,7 +70,7 @@ mod_progress_ui <- function(id) {
               shiny::uiOutput(ns("cardio_stat_box"))
             )
           ),
-          shiny::column(8,
+          shiny::div(class = "col-12 col-md-8",
             shiny::div(class = "panel-card",
               shiny::h5("Progress Over Time"),
               plotly::plotlyOutput(ns("cardio_chart"), height = "320px")
@@ -83,8 +83,8 @@ mod_progress_ui <- function(id) {
       shiny::tabPanel(
         title = "⚖ Body",
         shiny::br(),
-        shiny::fluidRow(
-          shiny::column(4,
+        shiny::div(class = "row g-3",
+          shiny::div(class = "col-12 col-md-4",
             shiny::div(class = "panel-card",
               shiny::h5("Log Measurement"),
               shiny::dateInput(ns("body_date"), "Date", value = Sys.Date(),
@@ -101,15 +101,15 @@ mod_progress_ui <- function(id) {
               shiny::uiOutput(ns("body_stat_box"))
             )
           ),
-          shiny::column(8,
+          shiny::div(class = "col-12 col-md-8",
             shiny::div(class = "panel-card",
               shiny::h5("Weight & Body Fat Over Time"),
               plotly::plotlyOutput(ns("body_chart"), height = "340px")
             )
           )
         ),
-        shiny::fluidRow(
-          shiny::column(12,
+        shiny::div(class = "row g-3",
+          shiny::div(class = "col-12",
             shiny::div(class = "panel-card",
               shiny::h5("History"),
               DT::DTOutput(ns("body_table"))
@@ -122,14 +122,14 @@ mod_progress_ui <- function(id) {
       shiny::tabPanel(
         title = "📊 Overview",
         shiny::br(),
-        shiny::fluidRow(
-          shiny::column(6,
+        shiny::div(class = "row g-3",
+          shiny::div(class = "col-12 col-md-6",
             shiny::div(class = "panel-card",
               shiny::h5("Sessions per Week"),
               plotly::plotlyOutput(ns("freq_chart"), height = "260px")
             )
           ),
-          shiny::column(6,
+          shiny::div(class = "col-12 col-md-6",
             shiny::div(class = "panel-card",
               shiny::h5("Exercise Distribution"),
               plotly::plotlyOutput(ns("dist_chart"), height = "260px")

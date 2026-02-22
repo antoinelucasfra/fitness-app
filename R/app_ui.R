@@ -106,8 +106,38 @@ app_ui <- function(request) {
 
       # ── Main panel ──────────────────────────────────────────────────────────
       shiny::div(
+        class = "main-content-wrap",
         style = "padding: 1.5rem; background:#0d0d0d; min-height:100vh;",
         shiny::uiOutput("main_content")
+      )
+    ),
+
+    # ── Mobile bottom nav bar ───────────────────────────────────────────────
+    shiny::tags$nav(
+      class = "mobile-bottom-nav",
+      shiny::tags$button(
+        id      = "mob_nav_dashboard",
+        class   = "mob-nav-btn mob-active",
+        onclick = "Shiny.setInputValue('nav_dashboard', Math.random());",
+        shiny::tags$i(class = "bi bi-house-fill")
+      ),
+      shiny::tags$button(
+        id      = "mob_nav_log",
+        class   = "mob-nav-btn",
+        onclick = "Shiny.setInputValue('nav_log', Math.random());",
+        shiny::tags$i(class = "bi bi-pencil-square")
+      ),
+      shiny::tags$button(
+        id      = "mob_nav_progress",
+        class   = "mob-nav-btn",
+        onclick = "Shiny.setInputValue('nav_progress', Math.random());",
+        shiny::tags$i(class = "bi bi-graph-up-arrow")
+      ),
+      shiny::tags$button(
+        id      = "mob_nav_goals",
+        class   = "mob-nav-btn",
+        onclick = "Shiny.setInputValue('nav_goals', Math.random());",
+        shiny::tags$i(class = "bi bi-trophy-fill")
       )
     )
   )

@@ -29,10 +29,16 @@ app_server <- function(input, output, session) {
   update_nav_styles <- function(active) {
     tabs <- c("dashboard", "log", "progress", "goals")
     for (t in tabs) {
+      # Desktop sidebar button styles
       shinyjs::runjs(sprintf(
         "document.getElementById('%s').style.cssText = '%s';",
         paste0("nav_", t),
         if (t == active) nav_btn_style_active else nav_btn_style_default
+      ))
+      # Mobile bottom nav active class
+      shinyjs::runjs(sprintf(
+        "(function(){ var el = document.getElementById('%s'); if(el){ if('%s'==='%s'){ el.classList.add('mob-active'); } else { el.classList.remove('mob-active'); } } })();",
+        paste0("mob_nav_", t), t, active
       ))
     }
   }
