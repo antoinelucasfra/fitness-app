@@ -1,0 +1,30 @@
+Package: fitnessapp
+Title: Florence's Fitness Tracker
+Version: 0.1.0
+Authors@R: 
+    person(given = "Antoine",
+           family = "Lucas",
+           role = c("aut", "cre"),
+           email = "antoine@example.com")
+Description: A personal fitness tracking Shiny app for Florence. Log workouts,
+    track strength and cardio progress, set goals, and stay motivated.
+License: MIT
+Imports:
+    config (>= 0.3.1),
+    golem (>= 0.3.2),
+    shiny (>= 1.7.0),
+    bslib (>= 0.4.0),
+    shinyjs,
+    shinyWidgets,
+    plotly,
+    DT,
+    dplyr,
+    lubridate,
+    stringr,
+    ggplot2,
+    htmltools,
+    waiter,
+    rappdirs
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.3

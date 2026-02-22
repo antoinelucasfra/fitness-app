@@ -1,0 +1,388 @@
+/* ── Florence Fitness App — Dark & Moody Theme ───────────────────────── */
+
+:root {
+  --bg-deep:      #0d0d0d;
+  --bg-card:      #1a1a2e;
+  --bg-panel:     #16213e;
+  --accent1:      #e94560;   /* hot coral-red */
+  --accent2:      #0f3460;   /* deep navy */
+  --accent3:      #f5a623;   /* gold */
+  --text-main:    #e8e8e8;
+  --text-muted:   #8a8a9a;
+  --border:       #2a2a4a;
+  --success:      #00d4aa;
+  --warning:      #f5a623;
+  --radius:       12px;
+  --shadow:       0 8px 32px rgba(0,0,0,0.5);
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────── */
+body {
+  background-color: var(--bg-deep) !important;
+  color: var(--text-main) !important;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+/* ── Sidebar ───────────────────────────────────────────────────────────── */
+.sidebar {
+  background: var(--bg-panel) !important;
+  border-right: 1px solid var(--border) !important;
+  min-height: 100vh;
+}
+
+.sidebar .sidebar-title {
+  color: var(--text-main) !important;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 0.5px;
+}
+
+/* nav pills in sidebar */
+.sidebar .nav-link {
+  color: var(--text-muted) !important;
+  border-radius: 8px !important;
+  margin: 2px 0;
+  padding: 0.55rem 1rem !important;
+  transition: all 0.2s ease;
+}
+.sidebar .nav-link:hover {
+  background: rgba(233, 69, 96, 0.15) !important;
+  color: var(--accent1) !important;
+}
+.sidebar .nav-link.active {
+  background: linear-gradient(135deg, var(--accent1), #c0392b) !important;
+  color: #fff !important;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(233,69,96,0.4);
+}
+
+/* ── Cards ─────────────────────────────────────────────────────────────── */
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.4rem 1.6rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  height: 100%;
+}
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+.stat-card .stat-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+.stat-card .stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent1);
+  line-height: 1;
+}
+.stat-card .stat-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.3rem;
+}
+
+/* ── Section cards / panels ─────────────────────────────────────────────── */
+.panel-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.4rem;
+}
+.panel-card h4, .panel-card h5 {
+  color: var(--text-main);
+  font-weight: 700;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--accent1);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+/* ── Motivational banner ─────────────────────────────────────────────────── */
+.motivation-banner {
+  background: linear-gradient(135deg, #1a1a2e, #0f3460);
+  border: 1px solid var(--accent1);
+  border-left: 4px solid var(--accent1);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.6rem;
+  margin-bottom: 1.4rem;
+  position: relative;
+  overflow: hidden;
+}
+.motivation-banner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(135deg, rgba(233,69,96,0.05), transparent);
+}
+.motivation-banner .quote-text {
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--text-main);
+  position: relative;
+}
+.motivation-banner .quote-author {
+  font-size: 0.82rem;
+  color: var(--accent1);
+  margin-top: 0.4rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+}
+
+/* ── Streak badge ───────────────────────────────────────────────────────── */
+.streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #f5a623, #e67e22);
+  color: #fff;
+  border-radius: 50px;
+  padding: 0.4rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(245,166,35,0.4);
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 4px 15px rgba(245,166,35,0.4); }
+  50%       { box-shadow: 0 4px 25px rgba(245,166,35,0.7); }
+}
+
+/* ── Progress bar ────────────────────────────────────────────────────────── */
+.progress {
+  background: #2a2a4a;
+  border-radius: 50px;
+  height: 10px;
+}
+.progress-bar {
+  background: linear-gradient(90deg, var(--accent1), var(--accent3));
+  border-radius: 50px;
+  transition: width 0.6s ease;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────── */
+.btn-primary, .btn-fitness {
+  background: linear-gradient(135deg, var(--accent1), #c0392b) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 15px rgba(233,69,96,0.3) !important;
+  transition: all 0.2s ease !important;
+}
+.btn-primary:hover, .btn-fitness:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(233,69,96,0.5) !important;
+}
+.btn-success {
+  background: linear-gradient(135deg, var(--success), #00a887) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 15px rgba(0,212,170,0.3) !important;
+}
+.btn-outline-light {
+  border-color: var(--border) !important;
+  color: var(--text-muted) !important;
+}
+.btn-outline-light:hover {
+  background: var(--border) !important;
+  color: var(--text-main) !important;
+}
+
+/* ── Form inputs ──────────────────────────────────────────────────────────── */
+.form-control, .form-select,
+.selectize-input, .selectize-dropdown {
+  background-color: #0d0d1a !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-main) !important;
+  border-radius: 8px !important;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent1) !important;
+  box-shadow: 0 0 0 3px rgba(233,69,96,0.2) !important;
+  background-color: #0d0d1a !important;
+  color: var(--text-main) !important;
+}
+.form-label {
+  color: var(--text-muted) !important;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.4rem;
+}
+.selectize-input {
+  background-color: #0d0d1a !important;
+  border-color: var(--border) !important;
+  color: var(--text-main) !important;
+}
+.selectize-dropdown {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+.selectize-dropdown-content .option {
+  color: var(--text-main) !important;
+}
+.selectize-dropdown-content .option:hover,
+.selectize-dropdown-content .option.active {
+  background: rgba(233,69,96,0.2) !important;
+  color: var(--accent1) !important;
+}
+
+/* ── DT tables ───────────────────────────────────────────────────────────── */
+.dataTables_wrapper {
+  color: var(--text-main) !important;
+}
+table.dataTable thead th {
+  background: var(--bg-panel) !important;
+  color: var(--text-muted) !important;
+  border-bottom: 2px solid var(--border) !important;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+table.dataTable tbody tr {
+  background: var(--bg-card) !important;
+  color: var(--text-main) !important;
+}
+table.dataTable tbody tr:hover {
+  background: rgba(233,69,96,0.1) !important;
+}
+table.dataTable tbody td {
+  border-bottom: 1px solid var(--border) !important;
+}
+.dataTables_filter input,
+.dataTables_length select {
+  background: #0d0d1a !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-main) !important;
+  border-radius: 6px;
+  padding: 2px 6px;
+}
+.dataTables_info, .dataTables_paginate {
+  color: var(--text-muted) !important;
+}
+.paginate_button.current {
+  background: var(--accent1) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 6px !important;
+}
+.paginate_button:hover {
+  background: rgba(233,69,96,0.3) !important;
+  color: var(--text-main) !important;
+  border: none !important;
+}
+
+/* ── Plotly chart backgrounds ───────────────────────────────────────────── */
+.js-plotly-plot .plotly .bg {
+  fill: transparent !important;
+}
+
+/* ── Goal progress item ─────────────────────────────────────────────────── */
+.goal-item {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  transition: border-color 0.2s;
+}
+.goal-item:hover { border-color: var(--accent1); }
+.goal-item .goal-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+.goal-item .goal-pct {
+  font-size: 0.85rem;
+  color: var(--accent3);
+  font-weight: 700;
+}
+.goal-item.completed {
+  border-color: var(--success);
+  background: rgba(0,212,170,0.05);
+}
+
+/* ── Badge pills ────────────────────────────────────────────────────────── */
+.badge-pill {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge-strength { background: rgba(233,69,96,0.2); color: var(--accent1); }
+.badge-cardio   { background: rgba(0,212,170,0.2); color: var(--success); }
+.badge-body     { background: rgba(245,166,35,0.2); color: var(--accent3); }
+
+/* ── Section title ────────────────────────────────────────────────────────── */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 0.3rem;
+}
+.section-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Waiter / splash ──────────────────────────────────────────────────────── */
+#waiter-overlay {
+  background: var(--bg-deep) !important;
+}
+
+/* ── Notifications / toasts ─────────────────────────────────────────────── */
+.shiny-notification {
+  background: var(--bg-card) !important;
+  border: 1px solid var(--accent1) !important;
+  color: var(--text-main) !important;
+  border-radius: var(--radius) !important;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent1); }
+
+/* ── Radio / checkbox dark override ─────────────────────────────────────── */
+.shiny-input-radiogroup label,
+.shiny-input-checkboxgroup label {
+  color: var(--text-main) !important;
+}
+
+/* ── Slider ──────────────────────────────────────────────────────────────── */
+.irs--shiny .irs-bar,
+.irs--shiny .irs-from,
+.irs--shiny .irs-to,
+.irs--shiny .irs-single {
+  background: var(--accent1) !important;
+  border-color: var(--accent1) !important;
+}
+.irs--shiny .irs-handle {
+  border-color: var(--accent1) !important;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .stat-card .stat-value { font-size: 1.5rem; }
+  .section-title { font-size: 1.2rem; }
+}

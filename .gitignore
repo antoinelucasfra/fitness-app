@@ -1,0 +1,27 @@
+# R / renv
+renv/library/
+renv/staging/
+.Rproj.user/
+*.Rproj
+.Rhistory
+.RData
+.Ruserdata
+
+# R package build artifacts
+*.o
+*.so
+*.dll
+src/*.o
+src/*.so
+
+# devtools / pkgdown
+docs/
+Meta/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets / env
+.env
+.Renviron
