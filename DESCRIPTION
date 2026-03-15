@@ -1,6 +1,8 @@
 Package: fitnessapp
 Title: Florence's Fitness Tracker
 Version: 0.1.0
+Depends:
+    R (>= 4.1.0)
 Authors@R: 
     person(given = "Antoine",
            family = "Lucas",
@@ -8,7 +10,7 @@ Authors@R:
            email = "antoine@example.com")
 Description: A personal fitness tracking Shiny app for Florence. Log workouts,
     track strength and cardio progress, set goals, and stay motivated.
-License: MIT
+License: MIT + file LICENSE
 Imports:
     config (>= 0.3.1),
     golem (>= 0.3.2),
@@ -19,11 +21,6 @@ Imports:
     plotly,
     DT,
     dplyr,
-    lubridate,
-    stringr,
-    ggplot2,
-    htmltools,
-    waiter,
     rappdirs,
     pkgload
 Encoding: UTF-8

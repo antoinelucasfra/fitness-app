@@ -4,7 +4,7 @@
 mod_goals_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    shiny::div(class = "section-title", "🎯 Goals"),
+    shiny::div(class = "section-title", "Goals"),
     shiny::div(class = "section-subtitle", "Set targets and smash them"),
 
     shiny::div(class = "row g-3",
@@ -39,7 +39,7 @@ mod_goals_ui <- function(id) {
                            value  = Sys.Date() + 60,
                            format = "dd/mm/yyyy"),
           shiny::br(),
-          shiny::actionButton(ns("add_goal"), "➕ Add Goal",
+          shiny::actionButton(ns("add_goal"), "Add Goal",
                               class = "btn btn-primary w-100")
         )
       ),
@@ -51,7 +51,7 @@ mod_goals_ui <- function(id) {
           shiny::uiOutput(ns("goals_list"))
         ),
         shiny::div(class = "panel-card",
-          shiny::h5("🏆 Achieved Goals"),
+          shiny::h5("Achieved Goals"),
           shiny::uiOutput(ns("achieved_list"))
         )
       )
@@ -61,7 +61,7 @@ mod_goals_ui <- function(id) {
     shiny::div(class = "row g-3",
       shiny::div(class = "col-12",
         shiny::div(class = "panel-card",
-          shiny::h5("✏\ufe0f Update Progress"),
+          shiny::h5("Update Progress"),
           shiny::div(class = "row g-2 goals-update-row",
             shiny::div(class = "col-12 col-md-4",
               shiny::selectInput(ns("update_goal_id"), "Select Goal",
@@ -73,12 +73,12 @@ mod_goals_ui <- function(id) {
             ),
             shiny::div(class = "col-6 col-md-2 goals-btn-row",
               shiny::br(),
-              shiny::actionButton(ns("update_goal"), "💾 Update",
+              shiny::actionButton(ns("update_goal"), "Update",
                                   class = "btn btn-success")
             ),
             shiny::div(class = "col-6 col-md-3 goals-btn-row",
               shiny::br(),
-              shiny::actionButton(ns("delete_goal"), "🗑 Delete Goal",
+              shiny::actionButton(ns("delete_goal"), "Delete Goal",
                                   class = "btn btn-outline-light")
             )
           )
@@ -129,7 +129,7 @@ mod_goals_server <- function(id, goals_rv, workouts) {
       df <- rbind(goals_rv(), new_goal)
       goals_rv(df)
       write_goals(df)
-      shiny::showNotification(paste0("🎯 Goal added: ", input$goal_name),
+      shiny::showNotification(paste0("Goal added: ", input$goal_name),
                                type = "message", duration = 3)
     })
 
@@ -145,7 +145,7 @@ mod_goals_server <- function(id, goals_rv, workouts) {
       write_goals(df)
       if (df$achieved[idx]) {
         shiny::showNotification(
-          paste0("🏆 GOAL ACHIEVED: ", df$name[idx], "! Amazing work Florence!"),
+          paste0("Goal achieved: ", df$name[idx], ". Amazing work Florence!"),
           type = "message", duration = 6
         )
       } else {
@@ -176,7 +176,7 @@ mod_goals_server <- function(id, goals_rv, workouts) {
       active <- df[!df$achieved, ]
       if (nrow(active) == 0) {
         return(shiny::p(style = "color:#8a8a9a;font-size:0.88rem;",
-                        "No active goals yet. Add one on the left! 🎯"))
+                        "No active goals yet. Add one on the left."))
       }
       items <- lapply(seq_len(nrow(active)), function(i) {
         g   <- active[i, ]
@@ -200,7 +200,7 @@ mod_goals_server <- function(id, goals_rv, workouts) {
             shiny::div(
               shiny::span(class = "goal-pct", paste0(pct, "%")),
               shiny::br(),
-              shiny::small(style = "color:#8a8a9a;", days_txt)
+              shiny::tags$small(style = "color:#8a8a9a;", days_txt)
             )
           ),
           shiny::div(
@@ -214,7 +214,7 @@ mod_goals_server <- function(id, goals_rv, workouts) {
                 )
               )
             ),
-            shiny::small(style = "color:#8a8a9a; white-space:nowrap;",
+            shiny::tags$small(style = "color:#8a8a9a; white-space:nowrap;",
                          paste0(g$current, " / ", g$target, " ", g$unit))
           )
         )
@@ -228,7 +228,7 @@ mod_goals_server <- function(id, goals_rv, workouts) {
       done <- df[df$achieved, ]
       if (nrow(done) == 0) {
         return(shiny::p(style = "color:#8a8a9a;font-size:0.88rem;",
-                        "Keep going — your first achievement is coming! 💪"))
+                        "Keep going - your first achievement is coming."))
       }
       items <- lapply(seq_len(nrow(done)), function(i) {
         g <- done[i, ]
@@ -236,12 +236,12 @@ mod_goals_server <- function(id, goals_rv, workouts) {
           style = "display:flex; justify-content:space-between; align-items:center;",
           shiny::div(
             shiny::div(class = "goal-name", g$name),
-            shiny::small(style = "color:#8a8a9a;",
+            shiny::tags$small(style = "color:#8a8a9a;",
                          paste0(g$current, " / ", g$target, " ", g$unit))
           ),
           shiny::div(
             shiny::span(class = "badge-pill", style = "background:rgba(0,212,170,0.2);color:#00d4aa;",
-                         "🏆 Achieved!")
+                         "Achieved!")
           )
         )
       })

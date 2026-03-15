@@ -4,16 +4,16 @@
 mod_progress_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    shiny::div(class = "section-title", "📈 Progress"),
+    shiny::div(class = "section-title", "Progress"),
     shiny::div(class = "section-subtitle", "Track how far you've come"),
 
     shiny::tabsetPanel(
       type = "pills",
       id   = ns("progress_tabs"),
 
-      # ── Strength tab ──────────────────────────────────────────────────────
+      # Strength tab
       shiny::tabPanel(
-        title = "🏋 Strength",
+        title = "Strength",
         shiny::br(),
         shiny::div(class = "row g-3",
           shiny::div(class = "col-12 col-md-4",
@@ -24,7 +24,7 @@ mod_progress_ui <- function(id) {
                                  width = "100%"),
               shiny::selectInput(ns("strength_metric"), "Show",
                                  choices = c("Max Weight (kg)" = "max_weight",
-                                             "Total Volume (sets×reps×kg)" = "total_volume",
+                                             "Total Volume (sets x reps x kg)" = "total_volume",
                                              "Max Reps" = "max_reps"),
                                  selected = "max_weight",
                                  width = "100%"),
@@ -42,16 +42,16 @@ mod_progress_ui <- function(id) {
         shiny::div(class = "row g-3",
           shiny::div(class = "col-12",
             shiny::div(class = "panel-card",
-              shiny::h5("🏆 Personal Records"),
+              shiny::h5("Personal Records"),
               DT::DTOutput(ns("pr_table"))
             )
           )
         )
       ),
 
-      # ── Cardio tab ─────────────────────────────────────────────────────────
+      # Cardio tab
       shiny::tabPanel(
-        title = "🏃 Cardio",
+        title = "Cardio",
         shiny::br(),
         shiny::div(class = "row g-3",
           shiny::div(class = "col-12 col-md-4",
@@ -79,9 +79,9 @@ mod_progress_ui <- function(id) {
         )
       ),
 
-      # ── Body composition tab ──────────────────────────────────────────────
+      # Body composition tab
       shiny::tabPanel(
-        title = "⚖ Body",
+        title = "Body",
         shiny::br(),
         shiny::div(class = "row g-3",
           shiny::div(class = "col-12 col-md-4",
@@ -95,7 +95,7 @@ mod_progress_ui <- function(id) {
                                   value = NA, min = 0, max = 60, step = 0.1),
               shiny::textInput(ns("body_notes"), "Notes", placeholder = "Optional"),
               shiny::br(),
-              shiny::actionButton(ns("add_body_btn"), "➕ Log Measurement",
+                shiny::actionButton(ns("add_body_btn"), "Log Measurement",
                                   class = "btn btn-primary w-100"),
               shiny::br(), shiny::br(),
               shiny::uiOutput(ns("body_stat_box"))
@@ -118,9 +118,9 @@ mod_progress_ui <- function(id) {
         )
       ),
 
-      # ── Volume / frequency tab ────────────────────────────────────────────
+      # Volume / frequency tab
       shiny::tabPanel(
-        title = "📊 Overview",
+        title = "Overview",
         shiny::br(),
         shiny::div(class = "row g-3",
           shiny::div(class = "col-12 col-md-6",
@@ -146,7 +146,7 @@ mod_progress_ui <- function(id) {
 mod_progress_server <- function(id, workouts_rv, bodycomp_rv) {
   shiny::moduleServer(id, function(input, output, session) {
 
-    # ── Strength ─────────────────────────────────────────────────────────────
+    # Strength
 
     strength_data <- shiny::reactive({
       df <- workouts_rv()
@@ -208,15 +208,15 @@ mod_progress_server <- function(id, workouts_rv, bodycomp_rv) {
       pr <- max(df$weight_kg, na.rm = TRUE)
       first_date <- min(as.Date(df$date))
       n_sessions <- length(unique(as.Date(df$date)))
-      shiny::div(
-        shiny::div(class = "stat-card",
-          shiny::span(class = "stat-icon", "🏆"),
+        shiny::div(
+          shiny::div(class = "stat-card",
+          shiny::span(class = "stat-icon", shiny::tags$i(class = "bi bi-trophy-fill")),
           shiny::div(class = "stat-value", paste0(pr, " kg")),
           shiny::div(class = "stat-label", "Personal Record"),
           shiny::br(),
-          shiny::small(style = "color:#8a8a9a;",
+          shiny::tags$small(style = "color:#8a8a9a;",
             paste0("Since ", format(first_date, "%d %b %Y"),
-                   " \u00b7 ", n_sessions, " sessions"))
+                   " | ", n_sessions, " sessions"))
         )
       )
     })
@@ -238,7 +238,7 @@ mod_progress_server <- function(id, workouts_rv, bodycomp_rv) {
                     rownames = FALSE, selection = "none")
     })
 
-    # ── Cardio ────────────────────────────────────────────────────────────────
+    # Cardio
 
     cardio_data <- shiny::reactive({
       df <- workouts_rv()
@@ -314,7 +314,7 @@ mod_progress_server <- function(id, workouts_rv, bodycomp_rv) {
       n_sessions <- nrow(df)
       shiny::div(
         shiny::div(class = "stat-card",
-          shiny::span(class = "stat-icon", "🏃\u200d\u2640\ufe0f"),
+          shiny::span(class = "stat-icon", shiny::tags$i(class = "bi bi-heart-pulse-fill")),
           shiny::div(class = "stat-value", paste0(round(total_dur), " min")),
           shiny::div(class = "stat-label", "Total Time"),
           if (total_dist > 0)
@@ -322,12 +322,12 @@ mod_progress_server <- function(id, workouts_rv, bodycomp_rv) {
                        paste0(round(total_dist, 1), " km total"))
           else NULL,
           shiny::br(),
-          shiny::small(style = "color:#8a8a9a;", paste0(n_sessions, " sessions"))
+          shiny::tags$small(style = "color:#8a8a9a;", paste0(n_sessions, " sessions"))
         )
       )
     })
 
-    # ── Body composition ───────────────────────────────────────────────────────
+    # Body composition
 
     shiny::observeEvent(input$add_body_btn, {
       shiny::req(input$body_date, input$body_weight)
@@ -342,7 +342,7 @@ mod_progress_server <- function(id, workouts_rv, bodycomp_rv) {
       all_body <- rbind(bodycomp_rv(), new_row)
       bodycomp_rv(all_body)
       write_bodycomp(all_body)
-      shiny::showNotification("⚖ Measurement saved!", type = "message", duration = 3)
+      shiny::showNotification("Measurement saved.", type = "message", duration = 3)
     })
 
     output$body_chart <- plotly::renderPlotly({
@@ -354,7 +354,7 @@ mod_progress_server <- function(id, workouts_rv, bodycomp_rv) {
               paper_bgcolor = "rgba(0,0,0,0)",
               plot_bgcolor  = "rgba(0,0,0,0)",
               annotations = list(list(
-                text = "No measurements yet — log your first one!",
+                text = "No measurements yet - log your first one!",
                 showarrow = FALSE,
                 font = list(color = "#8a8a9a", size = 14),
                 xref = "paper", yref = "paper", x = 0.5, y = 0.5
@@ -423,11 +423,11 @@ mod_progress_server <- function(id, workouts_rv, bodycomp_rv) {
       diff_txt <- if (diff == 0) "no change" else if (diff > 0) paste0("+", diff, " kg") else paste0(diff, " kg")
       shiny::div(
         shiny::div(class = "stat-card",
-          shiny::span(class = "stat-icon", "⚖\ufe0f"),
+          shiny::span(class = "stat-icon", shiny::tags$i(class = "bi bi-speedometer2")),
           shiny::div(class = "stat-value", paste0(last$weight_kg, " kg")),
           shiny::div(class = "stat-label", "Current Weight"),
           shiny::br(),
-          shiny::small(style = "color:#8a8a9a;", paste0("Since start: ", diff_txt))
+          shiny::tags$small(style = "color:#8a8a9a;", paste0("Since start: ", diff_txt))
         )
       )
     })
@@ -448,7 +448,7 @@ mod_progress_server <- function(id, workouts_rv, bodycomp_rv) {
                     rownames = FALSE, selection = "none")
     })
 
-    # ── Frequency / overview ──────────────────────────────────────────────────
+    # Frequency / overview
 
     output$freq_chart <- plotly::renderPlotly({
       df <- workouts_rv()

@@ -2,25 +2,65 @@
 #' @param input,output,session Internal parameters for {shiny}.
 #' @noRd
 app_server <- function(input, output, session) {
+  app_password <- Sys.getenv("FITNESS_APP_PASSWORD", unset = "")
+  password_configured <- nzchar(app_password)
+  authenticated <- shiny::reactiveVal(FALSE)
+  auth_error <- shiny::reactiveVal(NULL)
 
-  # ── Reactive data stores ─────────────────────────────────────────────────
   workouts_rv <- shiny::reactiveVal(read_workouts())
   bodycomp_rv <- shiny::reactiveVal(read_bodycomp())
   goals_rv    <- shiny::reactiveVal(read_goals())
 
-  # ── Sidebar streak label ─────────────────────────────────────────────────
+  output$app_view <- shiny::renderUI({
+    if (!password_configured || !authenticated()) {
+      return(app_login_ui(
+        configured = password_configured,
+        auth_error = auth_error()
+      ))
+    }
+    app_main_ui()
+  })
+
+  shiny::observeEvent(input$auth_submit, {
+    if (!password_configured) {
+      auth_error("Authentication is unavailable until FITNESS_APP_PASSWORD is configured.")
+      return()
+    }
+
+    entered_password <- if (is.null(input$auth_password)) "" else input$auth_password
+    if (!nzchar(entered_password)) {
+      auth_error("Enter the shared password to continue.")
+      return()
+    }
+
+    if (!identical(entered_password, app_password)) {
+      auth_error("Incorrect password. Try again.")
+      shiny::updateTextInput(session, "auth_password", value = "")
+      return()
+    }
+
+    auth_error(NULL)
+    authenticated(TRUE)
+    shiny::updateTextInput(session, "auth_password", value = "")
+  })
+
+  shiny::observeEvent(input$logout_btn, {
+    authenticated(FALSE)
+    auth_error(NULL)
+    current_tab("dashboard")
+  })
+
   output$sidebar_streak_label <- shiny::renderText({
     streak <- compute_streak(workouts_rv())
     if (streak == 0) {
-      "Start your streak today! 🔥"
+      "Start your streak today."
     } else if (streak == 1) {
-      "1 day streak 🔥"
+      "1 day streak"
     } else {
-      paste0(streak, " day streak 🔥🔥")
+      paste0(streak, " day streak")
     }
   })
 
-  # ── Navigation state ──────────────────────────────────────────────────────
   current_tab <- shiny::reactiveVal("dashboard")
 
   nav_btn_style_active  <- "background:linear-gradient(135deg,#e94560,#c0392b);color:#fff;border:none;border-radius:8px;padding:0.55rem 1rem;font-weight:600;width:100%;text-align:left;box-shadow:0 4px 15px rgba(233,69,96,0.4);"
@@ -48,8 +88,8 @@ app_server <- function(input, output, session) {
   shiny::observeEvent(input$nav_progress,  { current_tab("progress");  update_nav_styles("progress") })
   shiny::observeEvent(input$nav_goals,     { current_tab("goals");     update_nav_styles("goals") })
 
-  # ── Main content router ───────────────────────────────────────────────────
   output$main_content <- shiny::renderUI({
+    shiny::req(authenticated())
     switch(current_tab(),
       dashboard = mod_dashboard_ui("dashboard"),
       log       = mod_workout_log_ui("log"),
@@ -58,7 +98,6 @@ app_server <- function(input, output, session) {
     )
   })
 
-  # ── Module servers ────────────────────────────────────────────────────────
   mod_dashboard_server("dashboard", workouts = workouts_rv, goals = goals_rv)
   mod_workout_log_server("log", workouts_rv = workouts_rv)
   mod_progress_server("progress", workouts_rv = workouts_rv, bodycomp_rv = bodycomp_rv)

@@ -4,7 +4,7 @@
 mod_dashboard_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    shiny::div(class = "section-title", "🔥 Florence's Fitness Hub"),
+    shiny::div(class = "section-title", "Florence's Fitness Hub"),
     shiny::div(class = "section-subtitle", shiny::textOutput(ns("today_date"))),
 
     # Motivational banner
@@ -18,28 +18,28 @@ mod_dashboard_ui <- function(id) {
     shiny::div(class = "row g-3 mb-3",
       shiny::div(class = "col-6 col-md-3",
         shiny::div(class = "stat-card",
-          shiny::span(class = "stat-icon", "🏋️‍♀️"),
+          shiny::span(class = "stat-icon", shiny::tags$i(class = "bi bi-bar-chart-line-fill")),
           shiny::div(class = "stat-value", shiny::textOutput(ns("total_sessions"))),
           shiny::div(class = "stat-label", "Total Sessions")
         )
       ),
       shiny::div(class = "col-6 col-md-3",
         shiny::div(class = "stat-card",
-          shiny::span(class = "stat-icon", "🔥"),
+          shiny::span(class = "stat-icon", shiny::tags$i(class = "bi bi-fire")),
           shiny::div(class = "stat-value", shiny::textOutput(ns("streak"))),
           shiny::div(class = "stat-label", "Day Streak")
         )
       ),
       shiny::div(class = "col-6 col-md-3",
         shiny::div(class = "stat-card",
-          shiny::span(class = "stat-icon", "🏃‍♀️"),
+          shiny::span(class = "stat-icon", shiny::tags$i(class = "bi bi-heart-pulse-fill")),
           shiny::div(class = "stat-value", shiny::textOutput(ns("this_week"))),
           shiny::div(class = "stat-label", "This Week")
         )
       ),
       shiny::div(class = "col-6 col-md-3",
         shiny::div(class = "stat-card",
-          shiny::span(class = "stat-icon", "🎯"),
+          shiny::span(class = "stat-icon", shiny::tags$i(class = "bi bi-trophy-fill")),
           shiny::div(class = "stat-value", shiny::textOutput(ns("goals_done"))),
           shiny::div(class = "stat-label", "Goals Achieved")
         )
@@ -52,18 +52,18 @@ mod_dashboard_ui <- function(id) {
       # Recent workouts
       shiny::div(class = "col-12 col-md-7",
         shiny::div(class = "panel-card",
-          shiny::h5("⏱ Recent Workouts"),
+          shiny::h5("Recent Workouts"),
           DT::DTOutput(ns("recent_table"))
         )
       ),
       # Weekly calendar / heatmap
       shiny::div(class = "col-12 col-md-5",
         shiny::div(class = "panel-card",
-          shiny::h5("📅 Last 4 Weeks"),
+          shiny::h5("Last 4 Weeks"),
           plotly::plotlyOutput(ns("heatmap"), height = "220px")
         ),
         shiny::div(class = "panel-card", style = "margin-top:0;",
-          shiny::h5("🏆 Achievements"),
+          shiny::h5("Achievements"),
           shiny::uiOutput(ns("badges"))
         )
       )
@@ -86,7 +86,7 @@ mod_dashboard_server <- function(id, workouts, goals) {
     # Quote
     q <- todays_quote()
     output$quote_text   <- shiny::renderText(q$text)
-    output$quote_author <- shiny::renderText(paste0("\u2014 ", q$author))
+    output$quote_author <- shiny::renderText(paste0("- ", q$author))
 
     # Stats
     output$total_sessions <- shiny::renderText({
@@ -203,25 +203,25 @@ mod_dashboard_server <- function(id, workouts, goals) {
       badges <- list()
 
       if (total >= 1)
-        badges <- c(badges, list(shiny::span(class = "badge-pill badge-strength me-1 mb-1", "💪 First Workout!")))
+        badges <- c(badges, list(shiny::span(class = "badge-pill badge-strength me-1 mb-1", "First Workout")))
       if (total >= 10)
-        badges <- c(badges, list(shiny::span(class = "badge-pill badge-strength me-1 mb-1", "🔥 10 Sessions")))
+        badges <- c(badges, list(shiny::span(class = "badge-pill badge-strength me-1 mb-1", "10 Sessions")))
       if (total >= 25)
-        badges <- c(badges, list(shiny::span(class = "badge-pill badge-strength me-1 mb-1", "⭐ 25 Sessions")))
+        badges <- c(badges, list(shiny::span(class = "badge-pill badge-strength me-1 mb-1", "25 Sessions")))
       if (total >= 50)
-        badges <- c(badges, list(shiny::span(class = "badge-pill badge-strength me-1 mb-1", "🏆 50 Sessions")))
+        badges <- c(badges, list(shiny::span(class = "badge-pill badge-strength me-1 mb-1", "50 Sessions")))
       if (streak >= 3)
-        badges <- c(badges, list(shiny::span(class = "badge-pill badge-cardio me-1 mb-1", "🔥 3-Day Streak")))
+        badges <- c(badges, list(shiny::span(class = "badge-pill badge-cardio me-1 mb-1", "3-Day Streak")))
       if (streak >= 7)
-        badges <- c(badges, list(shiny::span(class = "badge-pill badge-cardio me-1 mb-1", "🔥🔥 7-Day Streak")))
+        badges <- c(badges, list(shiny::span(class = "badge-pill badge-cardio me-1 mb-1", "7-Day Streak")))
       if (streak >= 14)
-        badges <- c(badges, list(shiny::span(class = "badge-pill badge-body me-1 mb-1", "🌟 2-Week Streak")))
+        badges <- c(badges, list(shiny::span(class = "badge-pill badge-body me-1 mb-1", "2-Week Streak")))
       if (wk >= 5)
-        badges <- c(badges, list(shiny::span(class = "badge-pill badge-body me-1 mb-1", "💥 5x This Week")))
+        badges <- c(badges, list(shiny::span(class = "badge-pill badge-body me-1 mb-1", "5x This Week")))
 
       if (length(badges) == 0) {
         shiny::p(style = "color:#8a8a9a;font-size:0.88rem;",
-                 "Log your first workout to unlock badges! 🎖")
+                 "Log your first workout to unlock badges.")
       } else {
         shiny::div(badges)
       }

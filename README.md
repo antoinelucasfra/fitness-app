@@ -1,4 +1,4 @@
-# Flo Fit 💪
+# fitness-app 💪
 
 A personal fitness tracking app built for Florence — dark, moody, and motivating.
 Log workouts, track strength & cardio progress, set goals, and celebrate streaks.
@@ -42,7 +42,10 @@ renv::restore()
 # 2. Install the package
 devtools::install()
 
-# 3. Launch
+# 3. Set the shared app password
+Sys.setenv(FITNESS_APP_PASSWORD = "choose-a-password")
+
+# 4. Launch
 fitnessapp::run_app()
 ```
 
@@ -50,12 +53,50 @@ App opens at `http://127.0.0.1:PORT` in your browser.
 
 ---
 
+## Authentication
+
+The app now requires a shared password before the main UI is shown.
+
+- Runtime variable: `FITNESS_APP_PASSWORD`
+- The password is checked per browser session
+- No password is stored in the repository
+
+If `FITNESS_APP_PASSWORD` is missing, the app stays locked and shows a configuration message instead of the dashboard.
+
+For Posit Connect Cloud, configure `FITNESS_APP_PASSWORD` as an environment variable in the deployed app settings.
+
+---
+
+## CI/CD
+
+GitHub Actions now handles both validation and deployment:
+
+- `.github/workflows/ci.yaml` runs on pull requests to `main`, feature-branch pushes, and manual dispatches. It restores the `renv` environment and runs `devtools::check()`.
+- `.github/workflows/deploy.yaml` runs on pushes to `main` and manual dispatches. It reruns the package checks, generates a deployment manifest, and publishes to the existing Posit Connect Cloud app.
+
+### Required GitHub secret
+
+Add this repository secret before enabling deployment:
+
+- `POSIT_CONNECT_API_KEY`: an API key generated from your Posit Connect Cloud account
+
+### Deployment behavior
+
+- Production deploys target the existing Connect Cloud content ID `019c8665-051b-8cb9-da1b-d7af46a012ac`
+- Only one production deployment runs at a time
+- The workflow assumes the current Posit Connect Cloud target remains the production host
+- Production access also requires the `FITNESS_APP_PASSWORD` environment variable to be set in Connect Cloud
+
+Because app data is stored as local CSV files with `rappdirs::user_data_dir()`, CI/CD only automates code delivery. It does not manage server-side backups or data migration.
+
+---
+
 ## Deploy to Posit Connect Cloud
 
 ```r
 rsconnect::deployApp(
-  appName     = "flo-fit",
-  appTitle    = "Flo Fit",
+  appName     = "fitness-app",
+  appTitle    = "fitness-app",
   account     = "antoinelucasfra",
   server      = "connect.posit.cloud",
   lint        = FALSE,

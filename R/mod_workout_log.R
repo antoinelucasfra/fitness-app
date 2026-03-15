@@ -4,7 +4,7 @@
 mod_workout_log_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    shiny::div(class = "section-title", "📝 Log Workout"),
+    shiny::div(class = "section-title", "Log Workout"),
     shiny::div(class = "section-subtitle", "Record your training session"),
 
     shiny::div(class = "row g-3",
@@ -19,8 +19,8 @@ mod_workout_log_ui <- function(id) {
           shinyWidgets::radioGroupButtons(
             ns("type"),
             label = "Type",
-            choices = c("🏋 Strength" = "strength",
-                        "🏃 Cardio"   = "cardio"),
+            choices = c("Strength" = "strength",
+                        "Cardio"   = "cardio"),
             selected = "strength",
             status = "danger",
             justified = TRUE,
@@ -84,7 +84,7 @@ mod_workout_log_ui <- function(id) {
           shiny::textAreaInput(ns("notes"), "Notes (optional)", placeholder = "How did it feel?", rows = 2),
 
           shiny::br(),
-          shiny::actionButton(ns("add_btn"), "➕ Add Exercise",
+          shiny::actionButton(ns("add_btn"), "Add Exercise",
                               class = "btn btn-primary w-100", icon = NULL)
         )
       ),
@@ -100,9 +100,9 @@ mod_workout_log_ui <- function(id) {
               shiny::textOutput(ns("session_date_label"), inline = TRUE)
             ),
             shiny::div(
-              shiny::actionButton(ns("save_session"), "💾 Save Session",
+              shiny::actionButton(ns("save_session"), "Save Session",
                                   class = "btn btn-success btn-sm"),
-              shiny::actionButton(ns("clear_session"), "🗑 Clear",
+              shiny::actionButton(ns("clear_session"), "Clear",
                                   class = "btn btn-outline-light btn-sm ms-2")
             )
           ),
@@ -112,7 +112,7 @@ mod_workout_log_ui <- function(id) {
         ),
 
         shiny::div(class = "panel-card",
-          shiny::h5("📚 Full History"),
+          shiny::h5("Full History"),
           shiny::div(class = "row g-2",
             shiny::div(class = "col-12 col-md-4",
               shiny::dateRangeInput(ns("hist_range"), "Date range",
@@ -126,8 +126,8 @@ mod_workout_log_ui <- function(id) {
             ),
             shiny::div(class = "col-12 col-md-5",
               shiny::br(),
-              shiny::actionButton(ns("delete_selected"), "🗑 Delete Selected",
-                                  class = "btn btn-outline-light btn-sm")
+                shiny::actionButton(ns("delete_selected"), "Delete Selected",
+                                   class = "btn btn-outline-light btn-sm")
             )
           ),
           DT::DTOutput(ns("history_table"))
@@ -231,16 +231,16 @@ mod_workout_log_server <- function(id, workouts_rv) {
       tags <- list()
       if (n_strength > 0)
         tags <- c(tags, list(shiny::span(class = "badge-pill badge-strength me-2",
-                                        paste0("🏋 ", n_strength, " strength exercise(s)"))))
+                                        paste0(n_strength, " strength exercise(s)"))))
       if (n_cardio > 0)
         tags <- c(tags, list(shiny::span(class = "badge-pill badge-cardio me-2",
-                                        paste0("🏃 ", n_cardio, " cardio activity(ies)"))))
+                                        paste0(n_cardio, " cardio activity(ies)"))))
       if (total_vol > 0)
         tags <- c(tags, list(shiny::span(class = "badge-pill badge-body me-2",
-                                        paste0("💪 ", format(round(total_vol), big.mark = ","), " kg total volume"))))
+                                        paste0(format(round(total_vol), big.mark = ","), " kg total volume"))))
       if (total_dur > 0)
         tags <- c(tags, list(shiny::span(class = "badge-pill badge-cardio me-2",
-                                        paste0("⏱ ", total_dur, " min"))))
+                                        paste0(total_dur, " min"))))
       shiny::div(tags)
     })
 
@@ -256,7 +256,7 @@ mod_workout_log_server <- function(id, workouts_rv) {
       write_workouts(all_workouts)
       session_entries(workouts_schema())
       shiny::showNotification(
-        paste0("🔥 Session saved! ", nrow(df), " exercise(s) logged."),
+        paste0("Session saved. ", nrow(df), " exercise(s) logged."),
         type = "message", duration = 4
       )
     })
