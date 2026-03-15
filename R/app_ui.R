@@ -104,7 +104,7 @@ app_main_ui <- function() {
         style = "padding:0.8rem 1rem; margin-bottom:0.5rem;",
         shiny::div(
           style = "text-align:center; font-weight:700; color:#e8e8e8; font-size:0.95rem;",
-          "Hey Florence!"
+          "Welcome back"
         ),
         shiny::div(
           style = "text-align:center; font-size:0.78rem; color:#8a8a9a; margin-top:2px;",

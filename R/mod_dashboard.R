@@ -4,7 +4,7 @@
 mod_dashboard_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    shiny::div(class = "section-title", "Florence's Fitness Hub"),
+    shiny::div(class = "section-title", "Fitness Hub"),
     shiny::div(class = "section-subtitle", shiny::textOutput(ns("today_date"))),
 
     # Motivational banner

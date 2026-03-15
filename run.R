@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-# Run Florence's Fitness App
+# Run the fitness app
 # Usage: Rscript run.R
 #   or open in RStudio and click "Run App"
 

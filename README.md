@@ -1,6 +1,6 @@
 # fitness-app 💪
 
-A personal fitness tracking app built for Florence — dark, moody, and motivating.
+A personal fitness tracking app with a dark, motivating design.
 Log workouts, track strength & cardio progress, set goals, and celebrate streaks.
 
 **Live app:** https://connect.posit.cloud/antoinelucasfra/content/019c8665-051b-8cb9-da1b-d7af46a012ac

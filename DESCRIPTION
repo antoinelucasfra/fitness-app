@@ -1,14 +1,14 @@
 Package: fitnessapp
-Title: Florence's Fitness Tracker
+Title: Fitness Tracker
 Version: 0.1.0
 Depends:
     R (>= 4.1.0)
-Authors@R: 
+Authors@R:
     person(given = "Antoine",
            family = "Lucas",
            role = c("aut", "cre"),
            email = "antoine@example.com")
-Description: A personal fitness tracking Shiny app for Florence. Log workouts,
+Description: A personal fitness tracking Shiny app. Log workouts,
     track strength and cardio progress, set goals, and stay motivated.
 License: MIT + file LICENSE
 Imports:

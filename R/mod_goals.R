@@ -145,7 +145,7 @@ mod_goals_server <- function(id, goals_rv, workouts) {
       write_goals(df)
       if (df$achieved[idx]) {
         shiny::showNotification(
-          paste0("Goal achieved: ", df$name[idx], ". Amazing work Florence!"),
+          paste0("Goal achieved: ", df$name[idx], ". Great work!"),
           type = "message", duration = 6
         )
       } else {
