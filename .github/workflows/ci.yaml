@@ -33,6 +33,11 @@ jobs:
       - name: Restore renv cache and library
         uses: r-lib/actions/setup-renv@v2
 
+      - name: Install CI tools
+        shell: Rscript {0}
+        run: |
+          install.packages("devtools")
+
       - name: Run package checks
         shell: Rscript {0}
         run: |

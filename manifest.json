@@ -2013,37 +2013,6 @@
         "RemoteSha": "0.3.4"
       }
     },
-    "renv": {
-      "Source": "P3M",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "description": {
-        "Package": "renv",
-        "Type": "Package",
-        "Title": "Project Environments",
-        "Version": "1.1.5",
-        "Authors@R": "c(\n    person(\"Kevin\", \"Ushey\", role = c(\"aut\", \"cre\"), email = \"kevin@rstudio.com\",\n           comment = c(ORCID = \"0000-0003-2880-7407\")),\n    person(\"Hadley\", \"Wickham\", role = c(\"aut\"), email = \"hadley@rstudio.com\",\n           comment = c(ORCID = \"0000-0003-4757-117X\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n    )",
-        "Description": "A dependency management toolkit for R. Using 'renv', you can create\n    and manage project-local R libraries, save the state of these libraries to\n    a 'lockfile', and later restore your library as required. Together, these\n    tools can help make your projects more isolated, portable, and reproducible.",
-        "License": "MIT + file LICENSE",
-        "URL": "https://rstudio.github.io/renv/, https://github.com/rstudio/renv",
-        "BugReports": "https://github.com/rstudio/renv/issues",
-        "Imports": "utils",
-        "Suggests": "BiocManager, cli, compiler, covr, cpp11, devtools, generics,\ngitcreds, jsonlite, jsonvalidate, knitr, miniUI, modules,\npackrat, pak, R6, remotes, reticulate, rmarkdown, rstudioapi,\nshiny, testthat, uuid, waldo, yaml, webfakes",
-        "Encoding": "UTF-8",
-        "RoxygenNote": "7.3.2",
-        "VignetteBuilder": "knitr",
-        "Config/Needs/website": "tidyverse/tidytemplate",
-        "Config/testthat/edition": "3",
-        "Config/testthat/parallel": "true",
-        "Config/testthat/start-first": "bioconductor,python,install,restore,snapshot,retrieve,remotes",
-        "NeedsCompilation": "no",
-        "Packaged": "2025-07-24 20:47:34 UTC; kevin",
-        "Author": "Kevin Ushey [aut, cre] (ORCID: <https://orcid.org/0000-0003-2880-7407>),\n  Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>),\n  Posit Software, PBC [cph, fnd]",
-        "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-        "Repository": "RSPM",
-        "Date/Publication": "2025-07-24 21:40:02 UTC",
-        "Built": "R 4.5.0; ; 2025-07-25 04:37:13 UTC; unix"
-      }
-    },
     "rlang": {
       "Source": "P3M",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -2837,22 +2806,22 @@
   },
   "files": {
     ".Rbuildignore": {
-      "checksum": "8115dcc0ea9604038d4a6d04392de785"
+      "checksum": "87f9d4ec0ffedff42d9aa1a7e04c6c96"
     },
-    ".Renviron": {
-      "checksum": "d8966b7a59368e6ca3dd221585e09d02"
-    },
-    ".Rprofile": {
-      "checksum": "132fc47db9940a15d8f77dfb95db3aed"
-    },
-    ".github/workflows/ci.yaml": {
-      "checksum": "155a20aff9c4be67d025b100f4d75698"
-    },
-    ".github/workflows/deploy.yaml": {
-      "checksum": "293c3c53b5eca66e9cbfd9849fb09d9e"
+    "app.R": {
+      "checksum": "d456ef129e120c48c8211450db4becfc"
     },
     "DESCRIPTION": {
       "checksum": "b4855d07ffc62d24df501750ef7cbd88"
+    },
+    "inst/app/www/custom.css": {
+      "checksum": "b18b2585cb9538225ac1e6698e16a47c"
+    },
+    "inst/app/www/favicon.ico": {
+      "checksum": "81560d1b906a530c87fa0acbb2f5cca4"
+    },
+    "inst/golem-config.yml": {
+      "checksum": "7d625ffc54f7db0c2c2529f366aa24ae"
     },
     "NAMESPACE": {
       "checksum": "b2ce72ca2085beb12993348e368f0b17"
@@ -2889,27 +2858,6 @@
     },
     "R/utils_storage.R": {
       "checksum": "93f208fe4f38a4de8940973f5222756e"
-    },
-    "TODO.md": {
-      "checksum": "5732a9f1437df41c34b709ce83955151"
-    },
-    "app.R": {
-      "checksum": "d456ef129e120c48c8211450db4becfc"
-    },
-    "inst/app/www/custom.css": {
-      "checksum": "b18b2585cb9538225ac1e6698e16a47c"
-    },
-    "inst/app/www/favicon.ico": {
-      "checksum": "81560d1b906a530c87fa0acbb2f5cca4"
-    },
-    "inst/golem-config.yml": {
-      "checksum": "7d625ffc54f7db0c2c2529f366aa24ae"
-    },
-    "renv.lock": {
-      "checksum": "09e645cf3de1ee949965bdfa97c08e06"
-    },
-    "run.R": {
-      "checksum": "b3bef224f49a8122a138fcf5873f1eb3"
     }
   },
   "users": null

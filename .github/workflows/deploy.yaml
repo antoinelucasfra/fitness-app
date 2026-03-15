@@ -35,6 +35,11 @@ jobs:
       - name: Restore renv cache and library
         uses: r-lib/actions/setup-renv@v2
 
+      - name: Install validation tools
+        shell: Rscript {0}
+        run: |
+          install.packages("devtools")
+
       - name: Run package checks
         shell: Rscript {0}
         run: |
@@ -62,6 +67,11 @@ jobs:
 
       - name: Restore renv cache and library
         uses: r-lib/actions/setup-renv@v2
+
+      - name: Install deployment tools
+        shell: Rscript {0}
+        run: |
+          install.packages("rsconnect")
 
       - name: Generate deployment manifest
         env:
