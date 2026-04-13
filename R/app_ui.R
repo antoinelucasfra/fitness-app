@@ -6,7 +6,12 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     shiny::tags$head(
       shiny::tags$meta(name = "viewport",
-                       content = "width=device-width, initial-scale=1.0"),
+                       content = "width=device-width, initial-scale=1.0, viewport-fit=cover"),
+      # PWA / home-screen meta
+      shiny::tags$meta(name = "theme-color",                       content = "#0d0d0d"),
+      shiny::tags$meta(name = "apple-mobile-web-app-capable",      content = "yes"),
+      shiny::tags$meta(name = "apple-mobile-web-app-status-bar-style", content = "black"),
+      shiny::tags$meta(name = "apple-mobile-web-app-title",        content = "FitApp"),
       shinyjs::useShinyjs()
     ),
     shiny::uiOutput("app_view")
@@ -186,31 +191,36 @@ app_main_ui <- function() {
         id      = "mob_nav_dashboard",
         class   = "mob-nav-btn mob-active",
         onclick = "Shiny.setInputValue('nav_dashboard', Math.random());",
-        shiny::tags$i(class = "bi bi-house-fill")
+        shiny::tags$i(class = "bi bi-house-fill"),
+        shiny::tags$span(class = "mob-nav-label", "Home")
       ),
       shiny::tags$button(
         id      = "mob_nav_log",
         class   = "mob-nav-btn",
         onclick = "Shiny.setInputValue('nav_log', Math.random());",
-        shiny::tags$i(class = "bi bi-pencil-square")
+        shiny::tags$i(class = "bi bi-pencil-square"),
+        shiny::tags$span(class = "mob-nav-label", "Log")
       ),
       shiny::tags$button(
         id      = "mob_nav_progress",
         class   = "mob-nav-btn",
         onclick = "Shiny.setInputValue('nav_progress', Math.random());",
-        shiny::tags$i(class = "bi bi-graph-up-arrow")
+        shiny::tags$i(class = "bi bi-graph-up-arrow"),
+        shiny::tags$span(class = "mob-nav-label", "Progress")
       ),
       shiny::tags$button(
         id      = "mob_nav_goals",
         class   = "mob-nav-btn",
         onclick = "Shiny.setInputValue('nav_goals', Math.random());",
-        shiny::tags$i(class = "bi bi-trophy-fill")
+        shiny::tags$i(class = "bi bi-trophy-fill"),
+        shiny::tags$span(class = "mob-nav-label", "Goals")
       ),
       shiny::tags$button(
         id      = "mob_nav_planner",
         class   = "mob-nav-btn",
         onclick = "Shiny.setInputValue('nav_planner', Math.random());",
-        shiny::tags$i(class = "bi bi-calendar-check")
+        shiny::tags$i(class = "bi bi-calendar-check"),
+        shiny::tags$span(class = "mob-nav-label", "Planner")
       )
     )
   )

@@ -14,7 +14,7 @@
   --warning:      #f5a623;
   --radius:       12px;
   --shadow:       0 8px 32px rgba(0,0,0,0.5);
-  --mob-nav-h:    56px;
+  --mob-nav-h:    64px;   /* increased to fit icon + label */
 }
 
 /* ── Base ──────────────────────────────────────────────────────────────── */
@@ -23,6 +23,23 @@ body {
   color: var(--text-main) !important;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
+  /* prevent pull-to-refresh ruining the session UX */
+  overscroll-behavior-y: contain;
+}
+
+/* ── Buttons: fast tap response, no 300ms delay ─────────────────────── */
+.btn, button {
+  touch-action: manipulation;
+}
+
+/* ── Mobile nav label — hidden on desktop, visible on mobile ─────────── */
+.mob-nav-label {
+  display: none;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  line-height: 1;
 }
 
 /* ── Sidebar ───────────────────────────────────────────────────────────── */
@@ -400,30 +417,38 @@ table.dataTable tbody td {
     bottom: 0;
     left: 0;
     right: 0;
-    height: var(--mob-nav-h);
+    height: calc(var(--mob-nav-h) + env(safe-area-inset-bottom, 0px));
     background: #16213e;
     border-top: 1px solid var(--border);
     z-index: 1055;
     justify-content: space-around;
     align-items: stretch;
-    /* safe-area-inset for notched phones (iPhone X+) */
     padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   .mobile-bottom-nav .mob-nav-btn {
     flex: 1;
+    flex-direction: column;
+    gap: 3px;
     background: transparent;
     border: none;
     border-top: 2px solid transparent;
     color: var(--text-muted);
-    font-size: 1.45rem;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: color 0.18s, background 0.18s, border-color 0.18s;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
     min-height: 44px;
+    padding: 6px 0 4px;
     -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .mob-nav-label {
+    display: block;
+    color: inherit;
   }
 
   .mobile-bottom-nav .mob-nav-btn.mob-active {
@@ -433,18 +458,41 @@ table.dataTable tbody td {
   }
 
   .mobile-bottom-nav .mob-nav-btn:active {
-    background: rgba(233,69,96,0.18);
+    background: rgba(233,69,96,0.2);
+    transform: scale(0.95);
   }
 
   /* ── Clear content above the bottom nav ───────────────────────────── */
   .main-content-wrap {
-    padding-bottom: calc(var(--mob-nav-h) + 12px) !important;
+    padding: 0.9rem 0.9rem calc(var(--mob-nav-h) + env(safe-area-inset-bottom, 0px) + 12px) !important;
   }
 
-  /* ── Reduce outer padding on small screens ─────────────────────────── */
-  .main-content-wrap {
-    padding: 0.9rem 0.9rem calc(var(--mob-nav-h) + 12px) !important;
+  /* ── Hide bslib sidebar collapse toggle (we use bottom nav instead) ─ */
+  .bslib-sidebar-layout > .collapse-toggle,
+  .sidebar-toggle,
+  .bslib-sidebar-layout .sidebar-toggle {
+    display: none !important;
   }
+
+  /* ── iOS input font-size — prevents auto-zoom on focus ─────────────── */
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select,
+  .selectize-input input,
+  .form-control,
+  .form-select {
+    font-size: 16px !important;
+  }
+
+  /* ── Disable hover effects on touch (avoids stuck hover states) ─────── */
+  .stat-card:hover {
+    transform: none;
+    box-shadow: var(--shadow);
+  }
+  .btn-primary:hover, .btn-fitness:hover {
+    transform: none;
+  }
+  .goal-item:hover { border-color: var(--border); }
 
   /* ── Panel cards ────────────────────────────────────────────────────── */
   .panel-card {
@@ -485,6 +533,31 @@ table.dataTable tbody td {
     font-size: 0.85rem !important;
   }
 
+  /* ── Larger checkbox touch target (planner session cards) ───────────── */
+  input[type="checkbox"] {
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px;
+    cursor: pointer;
+  }
+  /* Give checkboxes a visible tap zone */
+  .checkbox label, .shiny-input-checkboxgroup label {
+    padding-left: 8px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ── Planner session cards: better spacing ──────────────────────────── */
+  /* Make sets/reps/weight row 3-up columns touch-friendly */
+  .session-ex-card .row > .col-4 {
+    padding: 0 4px;
+  }
+  .session-ex-card input[type="number"] {
+    text-align: center;
+    padding: 0.3rem 0.2rem;
+  }
+
   /* ── DT tables: horizontal scroll on narrow screens ────────────────── */
   .dataTables_wrapper {
     overflow-x: auto;
@@ -502,7 +575,9 @@ table.dataTable tbody td {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding-bottom: 4px;
+    scrollbar-width: none;
   }
+  .nav-pills::-webkit-scrollbar { display: none; }
   .nav-pills .nav-item {
     flex-shrink: 0;
   }
@@ -528,7 +603,6 @@ table.dataTable tbody td {
     max-width: 100% !important;
     flex: 0 0 100% !important;
   }
-  /* Put the two action buttons side by side on mobile */
   .goals-btn-row > .col-2,
   .goals-btn-row > .col-3 {
     width: 50% !important;
@@ -549,6 +623,24 @@ table.dataTable tbody td {
   /* ── Numeric spinners: larger touch area ─────────────────────────────── */
   input[type="number"] {
     min-height: 40px;
+  }
+
+  /* ── Modal: full-width, close to screen edges ────────────────────────── */
+  .modal-dialog {
+    margin: 0.5rem auto !important;
+    max-width: calc(100vw - 1rem) !important;
+  }
+  .modal-content {
+    border-radius: var(--radius) !important;
+  }
+  .modal-body img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  /* Larger close button in modal */
+  .modal-header .btn-close {
+    padding: 0.8rem !important;
   }
 }
 
