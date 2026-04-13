@@ -11,12 +11,10 @@ id = '019cf22f-bc9e-6c84-8540-875752c0c909'
 dashboard_url = 'https://connect.posit.cloud/antoinelucasfra/content/019cf22f-bc9e-6c84-8540-875752c0c909'
 direct_url = 'https://019cf22f-bc9e-6c84-8540-875752c0c909.share.connect.posit.cloud'
 logs_url = 'https://connect.posit.cloud/antoinelucasfra/content/019cf22f-bc9e-6c84-8540-875752c0c909/history'
-deployed_at = '2026-03-15T16:51:34+01:00'
-bundle_id = '019cf232-108f-db5a-61a6-d2cb258c2c66'
+deployed_at = '2026-03-15T17:58:14+01:00'
+bundle_id = '019cf26f-1aa4-e08e-a675-d8a1436e62ce'
 files = [
   '.Rbuildignore',
-  '.Renviron',
-  '.Rprofile',
   '.gitignore',
   '.posit/publish/deployments/deployment-3I3E.toml',
   '.posit/publish/fitness-app-H2RD.toml',
@@ -43,10 +41,7 @@ files = [
   'inst/app/www/favicon.ico',
   'inst/golem-config.yml',
   'man/run_app.Rd',
-  'renv.lock',
-  'renv/.gitignore',
-  'renv/activate.R',
-  'renv/settings.json'
+  'renv.lock'
 ]
 
 [connect_cloud]
@@ -64,18 +59,15 @@ files = [
   '/.posit/publish/fitness-app-H2RD.toml',
   '/.posit/publish/deployments/deployment-3I3E.toml',
   '/.Rbuildignore',
-  '/.Renviron',
   '/DESCRIPTION',
   '/NAMESPACE',
   '/R',
   '/README.md',
   '/inst',
   '/man',
-  '/renv',
   '/.gitignore',
   '/.posit',
-  '/dev',
-  '/.Rprofile'
+  '/dev'
 ]
 title = 'fitness-app'
 secrets = ['FITNESS_APP_PASSWORD']

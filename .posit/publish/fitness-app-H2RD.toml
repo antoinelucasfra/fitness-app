@@ -12,18 +12,15 @@ files = [
   '/.posit/publish/fitness-app-H2RD.toml',
   '/.posit/publish/deployments/deployment-3I3E.toml',
   '/.Rbuildignore',
-  '/.Renviron',
   '/DESCRIPTION',
   '/NAMESPACE',
   '/R',
   '/README.md',
   '/inst',
   '/man',
-  '/renv',
   '/.gitignore',
   '/.posit',
-  '/dev',
-  '/.Rprofile'
+  '/dev'
 ]
 title = 'fitness-app'
 secrets = ['FITNESS_APP_PASSWORD']

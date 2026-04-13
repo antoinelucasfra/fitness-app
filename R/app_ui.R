@@ -150,6 +150,15 @@ app_main_ui <- function() {
           ),
           class = "btn btn-nav text-start",
           style = "background:transparent;color:#8a8a9a;border:none;border-radius:8px;padding:0.55rem 1rem;width:100%;text-align:left;"
+        ),
+        shiny::actionButton(
+          "nav_planner",
+          shiny::div(
+            shiny::tags$i(class = "bi bi-calendar-check me-2"),
+            "Planner"
+          ),
+          class = "btn btn-nav text-start",
+          style = "background:transparent;color:#8a8a9a;border:none;border-radius:8px;padding:0.55rem 1rem;width:100%;text-align:left;"
         )
       ),
       shiny::hr(style = "border-color:#2a2a4a; margin:0.5rem 0;"),
@@ -196,6 +205,12 @@ app_main_ui <- function() {
         class   = "mob-nav-btn",
         onclick = "Shiny.setInputValue('nav_goals', Math.random());",
         shiny::tags$i(class = "bi bi-trophy-fill")
+      ),
+      shiny::tags$button(
+        id      = "mob_nav_planner",
+        class   = "mob-nav-btn",
+        onclick = "Shiny.setInputValue('nav_planner', Math.random());",
+        shiny::tags$i(class = "bi bi-calendar-check")
       )
     )
   )

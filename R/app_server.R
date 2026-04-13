@@ -67,7 +67,7 @@ app_server <- function(input, output, session) {
   nav_btn_style_default <- "background:transparent;color:#8a8a9a;border:none;border-radius:8px;padding:0.55rem 1rem;width:100%;text-align:left;"
 
   update_nav_styles <- function(active) {
-    tabs <- c("dashboard", "log", "progress", "goals")
+    tabs <- c("dashboard", "log", "progress", "goals", "planner")
     for (t in tabs) {
       # Desktop sidebar button styles
       shinyjs::runjs(sprintf(
@@ -87,6 +87,7 @@ app_server <- function(input, output, session) {
   shiny::observeEvent(input$nav_log,       { current_tab("log");       update_nav_styles("log") })
   shiny::observeEvent(input$nav_progress,  { current_tab("progress");  update_nav_styles("progress") })
   shiny::observeEvent(input$nav_goals,     { current_tab("goals");     update_nav_styles("goals") })
+  shiny::observeEvent(input$nav_planner,   { current_tab("planner");   update_nav_styles("planner") })
 
   output$main_content <- shiny::renderUI({
     shiny::req(authenticated())
@@ -94,7 +95,8 @@ app_server <- function(input, output, session) {
       dashboard = mod_dashboard_ui("dashboard"),
       log       = mod_workout_log_ui("log"),
       progress  = mod_progress_ui("progress"),
-      goals     = mod_goals_ui("goals")
+      goals     = mod_goals_ui("goals"),
+      planner   = mod_planner_ui("planner")
     )
   })
 
@@ -102,4 +104,5 @@ app_server <- function(input, output, session) {
   mod_workout_log_server("log", workouts_rv = workouts_rv)
   mod_progress_server("progress", workouts_rv = workouts_rv, bodycomp_rv = bodycomp_rv)
   mod_goals_server("goals", goals_rv = goals_rv, workouts = workouts_rv)
+  mod_planner_server("planner", workouts_rv = workouts_rv)
 }

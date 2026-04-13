@@ -113,6 +113,67 @@ write_goals <- function(df) {
   utils::write.csv(df, goals_path(), row.names = FALSE)
 }
 
+# ── Plans (workout templates) ─────────────────────────────────────────────────
+
+#' @noRd
+plans_path <- function() file.path(data_dir(), "plans.csv")
+
+#' @noRd
+plan_exercises_path <- function() file.path(data_dir(), "plan_exercises.csv")
+
+plans_schema <- function() {
+  data.frame(
+    id         = character(),
+    name       = character(),
+    created_at = as.Date(character()),
+    stringsAsFactors = FALSE
+  )
+}
+
+plan_exercises_schema <- function() {
+  data.frame(
+    id           = character(),
+    plan_id      = character(),
+    exercise     = character(),
+    type         = character(),   # "strength" | "cardio"
+    sets         = integer(),
+    reps         = integer(),
+    weight_kg    = numeric(),
+    duration_min = numeric(),
+    distance_km  = numeric(),
+    order_idx    = integer(),
+    stringsAsFactors = FALSE
+  )
+}
+
+#' @noRd
+read_plans <- function() {
+  p <- plans_path()
+  if (!file.exists(p)) return(plans_schema())
+  df <- utils::read.csv(p, stringsAsFactors = FALSE, colClasses = c(created_at = "Date"))
+  if (nrow(df) == 0) return(plans_schema())
+  df
+}
+
+#' @noRd
+read_plan_exercises <- function() {
+  p <- plan_exercises_path()
+  if (!file.exists(p)) return(plan_exercises_schema())
+  df <- utils::read.csv(p, stringsAsFactors = FALSE)
+  if (nrow(df) == 0) return(plan_exercises_schema())
+  df
+}
+
+#' @noRd
+write_plans <- function(df) {
+  utils::write.csv(df, plans_path(), row.names = FALSE)
+}
+
+#' @noRd
+write_plan_exercises <- function(df) {
+  utils::write.csv(df, plan_exercises_path(), row.names = FALSE)
+}
+
 # ── Helpers ────────────────────────────────────────────────────────────────────
 
 #' Generate a simple unique ID
