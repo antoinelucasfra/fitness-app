@@ -44,17 +44,30 @@ mod_planner_ui <- function(id) {
 
           shiny::conditionalPanel(
             condition = sprintf("input['%s'] === 'strength'", ns("plan_ex_type")),
-            shiny::selectizeInput(
-              ns("plan_ex_exercise"),
-              "Exercise",
-              choices = c(
-                "Squat", "Deadlift", "Bench Press", "Overhead Press",
-                "Hip Thrust", "Leg Press", "Lunges", "Romanian Deadlift",
-                "Lat Pulldown", "Seated Row", "Bicep Curl", "Tricep Pushdown",
-                "Glute Kickback", "Cable Crunch", "Plank", "Other"
+            shiny::div(
+              style = "display:flex; align-items:flex-end; gap:0.4rem;",
+              shiny::div(style = "flex:1;",
+                shiny::selectizeInput(
+                  ns("plan_ex_exercise"),
+                  "Exercise",
+                  choices = c(
+                    "Squat", "Deadlift", "Bench Press", "Overhead Press",
+                    "Hip Thrust", "Leg Press", "Lunges", "Romanian Deadlift",
+                    "Lat Pulldown", "Seated Row", "Bicep Curl", "Tricep Pushdown",
+                    "Glute Kickback", "Cable Crunch", "Plank", "Other"
+                  ),
+                  options = list(create = TRUE),
+                  width = "100%"
+                )
               ),
-              options = list(create = TRUE),
-              width = "100%"
+              shiny::div(style = "padding-bottom:0.15rem;",
+                shiny::actionButton(
+                  ns("info_plan_ex"),
+                  shiny::tags$i(class = "bi bi-info-circle"),
+                  class = "btn btn-outline-secondary btn-sm",
+                  title = "How to perform this exercise"
+                )
+              )
             ),
             shiny::fluidRow(
               shiny::column(4,
@@ -71,16 +84,29 @@ mod_planner_ui <- function(id) {
 
           shiny::conditionalPanel(
             condition = sprintf("input['%s'] === 'cardio'", ns("plan_ex_type")),
-            shiny::selectizeInput(
-              ns("plan_ex_cardio"),
-              "Activity",
-              choices = c(
-                "Running", "Treadmill", "Cycling", "Stationary Bike",
-                "Elliptical", "Rowing Machine", "Jump Rope", "Stairmaster",
-                "Swimming", "HIIT", "Other"
+            shiny::div(
+              style = "display:flex; align-items:flex-end; gap:0.4rem;",
+              shiny::div(style = "flex:1;",
+                shiny::selectizeInput(
+                  ns("plan_ex_cardio"),
+                  "Activity",
+                  choices = c(
+                    "Running", "Treadmill", "Cycling", "Stationary Bike",
+                    "Elliptical", "Rowing Machine", "Jump Rope", "Stairmaster",
+                    "Swimming", "HIIT", "Other"
+                  ),
+                  options = list(create = TRUE),
+                  width = "100%"
+                )
               ),
-              options = list(create = TRUE),
-              width = "100%"
+              shiny::div(style = "padding-bottom:0.15rem;",
+                shiny::actionButton(
+                  ns("info_plan_cardio"),
+                  shiny::tags$i(class = "bi bi-info-circle"),
+                  class = "btn btn-outline-secondary btn-sm",
+                  title = "How to perform this activity"
+                )
+              )
             ),
             shiny::fluidRow(
               shiny::column(6,
@@ -122,6 +148,16 @@ mod_planner_server <- function(id, workouts_rv) {
     # Active session state: list of rows from plan_exercises + checked + actual params
     session_active   <- shiny::reactiveVal(FALSE)
     session_data     <- shiny::reactiveVal(NULL)  # data.frame with session exercise rows
+
+    # ── Exercise info modals (add-exercise form) ───────────────────────────────
+    shiny::observeEvent(input$info_plan_ex, {
+      nm <- if (!is.null(input$plan_ex_exercise) && nzchar(input$plan_ex_exercise)) input$plan_ex_exercise else "Squat"
+      show_exercise_modal(nm, session)
+    })
+    shiny::observeEvent(input$info_plan_cardio, {
+      nm <- if (!is.null(input$plan_ex_cardio) && nzchar(input$plan_ex_cardio)) input$plan_ex_cardio else "Running"
+      show_exercise_modal(nm, session)
+    })
 
     # ── Create plan ────────────────────────────────────────────────────────────
     shiny::observeEvent(input$create_plan, {
@@ -373,12 +409,18 @@ mod_planner_server <- function(id, workouts_rv) {
       if (is.null(sd)) return()
       lapply(seq_len(nrow(sd)), function(i) {
         ex_id    <- sd$id[i]
+        ex_name  <- sd$exercise[i]
         chk_id   <- paste0("chk_", ex_id)
+        info_id  <- paste0("info_card_", ex_id)
 
         shiny::observeEvent(input[[chk_id]], {
           sd2 <- session_data()
           sd2$checked[sd2$id == ex_id] <- isTRUE(input[[chk_id]])
           session_data(sd2)
+        }, ignoreInit = TRUE)
+
+        shiny::observeEvent(input[[info_id]], {
+          show_exercise_modal(ex_name, session)
         }, ignoreInit = TRUE)
       })
     })
@@ -468,7 +510,7 @@ mod_planner_server <- function(id, workouts_rv) {
               label = NULL,
               value = is_checked
             ),
-            shiny::div(
+            shiny::div(style = "flex:1;",
               shiny::strong(row$exercise,
                             style = paste0("font-size:1rem; color:",
                                            if (is_checked) "#00d4aa" else "#e8e8e8", ";")),
@@ -478,6 +520,13 @@ mod_planner_server <- function(id, workouts_rv) {
                             if (row$type == "strength") "bi-lightning-fill" else "bi-heart-pulse-fill",
                             " me-1")),
                           target_label)
+            ),
+            shiny::actionButton(
+              ns(paste0("info_card_", ex_id)),
+              shiny::tags$i(class = "bi bi-info-circle"),
+              class = "btn btn-outline-secondary btn-sm p-1",
+              style = "line-height:1; min-width:28px;",
+              title = paste("How to:", row$exercise)
             )
           ),
           shiny::div(
