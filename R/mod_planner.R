@@ -193,33 +193,49 @@ mod_planner_server <- function(id, workouts_rv) {
       }
       selected <- selected_plan_id()
       rows <- lapply(seq_len(nrow(plans)), function(i) {
-        pid  <- plans$id[i]
+        pid   <- plans$id[i]
         pname <- plans$name[i]
         is_sel <- identical(selected, pid)
+
         shiny::div(
+          class = paste0("plan-row", if (is_sel) " plan-row--active" else ""),
           style = paste0(
             "display:flex; align-items:center; justify-content:space-between;",
-            "padding:0.5rem 0.75rem; border-radius:8px; margin-bottom:0.4rem; cursor:pointer;",
-            if (is_sel) "background:#1a2a4a; border:1px solid #e94560;" else "background:#1a1a2e; border:1px solid #2a2a4a;"
+            "padding:0.65rem 0.9rem; border-radius:8px; margin-bottom:0.4rem;",
+            "cursor:pointer; user-select:none;",
+            if (is_sel)
+              "background:#1a2a4a; border:2px solid #e94560;"
+            else
+              "background:#1a1a2e; border:2px solid transparent;"
+          ),
+          onclick = paste0(
+            "(function(e){",
+            "if(e.target.closest('button'))return;",
+            "Shiny.setInputValue('", ns(paste0("select_plan_", pid)), "',Math.random());",
+            "})(event)"
           ),
           shiny::div(
-            style = "font-weight:600; color:#e8e8e8; font-size:0.9rem;",
-            shiny::tags$i(class = "bi bi-calendar-check me-2", style = "color:#e94560;"),
-            pname
-          ),
-          shiny::div(
-            shiny::actionButton(
-              ns(paste0("select_plan_", pid)),
-              if (is_sel) shiny::tags$i(class = "bi bi-check-circle-fill") else shiny::tags$i(class = "bi bi-circle"),
-              class = if (is_sel) "btn btn-sm btn-success p-1 me-1" else "btn btn-sm btn-outline-secondary p-1 me-1",
-              title = "Select"
+            style = "display:flex; align-items:center; gap:0.65rem;",
+            shiny::tags$i(
+              class = if (is_sel) "bi bi-check-circle-fill" else "bi bi-circle",
+              style = paste0(
+                "font-size:1rem; color:",
+                if (is_sel) "#e94560" else "#4a4a6a", ";"
+              )
             ),
-            shiny::actionButton(
-              ns(paste0("delete_plan_", pid)),
-              shiny::tags$i(class = "bi bi-trash"),
-              class = "btn btn-sm btn-outline-danger p-1",
-              title = "Delete plan"
+            shiny::div(
+              style = paste0(
+                "font-weight:600; font-size:0.9rem; color:",
+                if (is_sel) "#e8e8e8" else "#a8a8b8", ";"
+              ),
+              pname
             )
+          ),
+          shiny::actionButton(
+            ns(paste0("delete_plan_", pid)),
+            shiny::tags$i(class = "bi bi-trash"),
+            class = "btn btn-sm btn-outline-danger p-1",
+            title = "Delete plan"
           )
         )
       })
@@ -495,42 +511,77 @@ mod_planner_server <- function(id, workouts_rv) {
         }
 
         border_color <- if (is_checked) "#00d4aa" else "#2a2a4a"
-        bg_color     <- if (is_checked) "rgba(0,212,170,0.07)" else "transparent"
+        bg_color     <- if (is_checked) "rgba(0,212,170,0.06)" else "rgba(26,26,46,0.8)"
+        name_color   <- if (is_checked) "#00d4aa" else "#e8e8e8"
+        name_extra   <- if (is_checked) "text-decoration:line-through; opacity:0.75;" else ""
+
+        # Hidden Shiny checkbox (tracks state; not visible)
+        hidden_chk <- shiny::div(
+          style = "display:none;",
+          shiny::checkboxInput(chk_id, label = NULL, value = is_checked)
+        )
+
+        # Large tap-friendly check icon (replaces visible checkbox widget)
+        check_icon <- shiny::tags$i(
+          class = if (is_checked) "bi bi-check-circle-fill" else "bi bi-circle",
+          style = paste0(
+            "font-size:1.6rem; flex-shrink:0; transition:color 0.2s;",
+            "color:", if (is_checked) "#00d4aa" else "#4a4a6a", ";"
+          )
+        )
+
+        # JS onclick: toggle hidden checkbox; guard against button/input clicks
+        toggle_js <- paste0(
+          "(function(e){",
+          "if(e.target.closest('button')||e.target.closest('input'))return;",
+          "var $cb=$('#", chk_id, "');",
+          "$cb.prop('checked',!$cb.prop('checked')).trigger('change');",
+          "})(event)"
+        )
 
         shiny::div(
+          class = "session-ex-card",
           style = paste0(
-            "border:1px solid ", border_color, "; background:", bg_color, ";",
-            "border-radius:10px; padding:1rem; margin-bottom:0.75rem;",
-            "transition: border-color 0.2s, background 0.2s;"
+            "border:2px solid ", border_color, ";background:", bg_color, ";",
+            "border-radius:12px; padding:0.9rem 1rem; margin-bottom:0.75rem;",
+            "transition:border-color 0.2s, background 0.2s;"
           ),
+          hidden_chk,
+          # ── Tappable header ──────────────────────────────────────────────
           shiny::div(
-            style = "display:flex; align-items:center; gap:0.75rem; margin-bottom:0.5rem;",
-            shiny::checkboxInput(
-              chk_id,
-              label = NULL,
-              value = is_checked
-            ),
-            shiny::div(style = "flex:1;",
-              shiny::strong(row$exercise,
-                            style = paste0("font-size:1rem; color:",
-                                           if (is_checked) "#00d4aa" else "#e8e8e8", ";")),
-              shiny::br(),
-              shiny::span(style = "color:#8a8a9a; font-size:0.8rem;",
-                          shiny::tags$i(class = paste0("bi ",
-                            if (row$type == "strength") "bi-lightning-fill" else "bi-heart-pulse-fill",
-                            " me-1")),
-                          target_label)
+            class = "session-card-header",
+            onclick = toggle_js,
+            check_icon,
+            shiny::div(
+              style = "flex:1; min-width:0;",
+              shiny::div(
+                style = paste0("font-weight:700; font-size:1rem; color:", name_color, ";", name_extra),
+                row$exercise
+              ),
+              shiny::div(
+                style = "color:#8a8a9a; font-size:0.8rem; margin-top:3px;",
+                shiny::tags$i(class = paste0("bi ",
+                  if (row$type == "strength") "bi-lightning-fill" else "bi-heart-pulse-fill",
+                  " me-1")),
+                target_label
+              )
             ),
             shiny::actionButton(
               ns(paste0("info_card_", ex_id)),
               shiny::tags$i(class = "bi bi-info-circle"),
               class = "btn btn-outline-secondary btn-sm p-1",
-              style = "line-height:1; min-width:28px;",
+              style = "line-height:1; min-width:32px; flex-shrink:0;",
               title = paste("How to:", row$exercise)
             )
           ),
+          # ── Detail inputs (editing zone — not a toggle target) ───────────
           shiny::div(
-            style = if (is_checked) "" else "opacity:0.55;",
+            class = "session-card-fields",
+            style = paste0(
+              "opacity:", if (is_checked) "1" else "0.5", ";",
+              "transition:opacity 0.2s; border-top:1px solid #2a2a4a;",
+              "padding-top:0.75rem; margin-top:0.25rem;"
+            ),
             detail_fields
           )
         )

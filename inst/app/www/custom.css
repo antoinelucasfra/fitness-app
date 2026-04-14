@@ -317,9 +317,10 @@ table.dataTable tbody td {
   border-radius: 10px;
   padding: 1rem 1.2rem;
   margin-bottom: 0.8rem;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s, transform 0.1s;
 }
 .goal-item:hover { border-color: var(--accent1); }
+.goal-item:active { transform: scale(0.985); background: rgba(233,69,96,0.06); }
 .goal-item .goal-name {
   font-weight: 600;
   font-size: 0.95rem;
@@ -333,7 +334,25 @@ table.dataTable tbody td {
 .goal-item.completed {
   border-color: var(--success);
   background: rgba(0,212,170,0.05);
+  cursor: default;
 }
+
+/* ── Session exercise cards ──────────────────────────────────────────────── */
+.session-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+  padding: 0.1rem 0;
+  border-radius: 8px;
+  transition: opacity 0.15s;
+}
+.session-card-header:active { opacity: 0.7; }
+
+/* ── Plan rows ───────────────────────────────────────────────────────────── */
+.plan-row { transition: background 0.15s, border-color 0.15s, transform 0.1s; }
+.plan-row:active { transform: scale(0.985); }
 
 /* ── Badge pills ────────────────────────────────────────────────────────── */
 .badge-pill {

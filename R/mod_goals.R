@@ -109,6 +109,12 @@ mod_goals_server <- function(id, goals_rv, workouts) {
       }
     })
 
+    # Tapping a goal card pre-selects it in the update dropdown
+    shiny::observeEvent(input$tap_goal_id, {
+      shiny::updateSelectInput(session, "update_goal_id",
+                               selected = input$tap_goal_id)
+    })
+
     # Add goal
     shiny::observeEvent(input$add_goal, {
       shiny::req(input$goal_name, input$goal_target)
@@ -190,7 +196,15 @@ mod_goals_server <- function(id, goals_rv, workouts) {
           consistency = "badge-body",
           "badge-strength"
         )
-        shiny::div(class = "goal-item",
+        shiny::div(
+          class = "goal-item",
+          style = "cursor:pointer; user-select:none;",
+          onclick = paste0(
+            "(function(e){",
+            "if(e.target.closest('button'))return;",
+            "Shiny.setInputValue('", ns("tap_goal_id"), "','", g$id, "',{priority:'event'});",
+            "})(event)"
+          ),
           shiny::div(
             style = "display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;",
             shiny::div(
