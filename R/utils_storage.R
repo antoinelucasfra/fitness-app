@@ -1,7 +1,8 @@
 #' Data storage helpers
 #'
-#' All data is stored as CSV files in a user-writable data directory.
-#' This keeps the app portable and easy to back up.
+#' On Posit Connect (CONNECT_SERVER env var set): uses pins::board_connect()
+#' for persistent storage that survives container restarts.
+#' Locally: uses pins::board_folder() backed by rappdirs::user_data_dir().
 
 #' @noRd
 data_dir <- function() {
@@ -10,16 +11,25 @@ data_dir <- function() {
   d
 }
 
-# ── File paths ────────────────────────────────────────────────────────────────
-
+#' Return the appropriate pins board based on environment.
 #' @noRd
-workouts_path <- function() file.path(data_dir(), "workouts.csv")
+get_board <- function() {
+  if (nzchar(Sys.getenv("CONNECT_SERVER"))) {
+    pins::board_connect()
+  } else {
+    pins::board_folder(data_dir())
+  }
+}
 
+#' Read a pin, returning `default` if it doesn't exist yet.
 #' @noRd
-bodycomp_path <- function() file.path(data_dir(), "bodycomp.csv")
-
-#' @noRd
-goals_path    <- function() file.path(data_dir(), "goals.csv")
+pin_read_safe <- function(board, name, default) {
+  if (name %in% pins::pin_list(board)) {
+    pins::pin_read(board, name)
+  } else {
+    default
+  }
+}
 
 # ── Column schemas ─────────────────────────────────────────────────────────────
 
@@ -69,30 +79,27 @@ goals_schema <- function() {
 
 #' @noRd
 read_workouts <- function() {
-  p <- workouts_path()
-  if (!file.exists(p)) return(workouts_schema())
-  df <- utils::read.csv(p, stringsAsFactors = FALSE, colClasses = c(date = "Date"))
+  df <- pin_read_safe(get_board(), "workouts", workouts_schema())
   if (nrow(df) == 0) return(workouts_schema())
+  df$date <- as.Date(df$date)
   df
 }
 
 #' @noRd
 read_bodycomp <- function() {
-  p <- bodycomp_path()
-  if (!file.exists(p)) return(bodycomp_schema())
-  df <- utils::read.csv(p, stringsAsFactors = FALSE, colClasses = c(date = "Date"))
+  df <- pin_read_safe(get_board(), "bodycomp", bodycomp_schema())
   if (nrow(df) == 0) return(bodycomp_schema())
+  df$date <- as.Date(df$date)
   df
 }
 
 #' @noRd
 read_goals <- function() {
-  p <- goals_path()
-  if (!file.exists(p)) return(goals_schema())
-  df <- utils::read.csv(p, stringsAsFactors = FALSE,
-                        colClasses = c(created_at = "Date", target_date = "Date"))
+  df <- pin_read_safe(get_board(), "goals", goals_schema())
   if (nrow(df) == 0) return(goals_schema())
-  df$achieved <- as.logical(df$achieved)
+  df$created_at  <- as.Date(df$created_at)
+  df$target_date <- as.Date(df$target_date)
+  df$achieved    <- as.logical(df$achieved)
   df
 }
 
@@ -100,17 +107,69 @@ read_goals <- function() {
 
 #' @noRd
 write_workouts <- function(df) {
-  utils::write.csv(df, workouts_path(), row.names = FALSE)
+  pins::pin_write(get_board(), df, name = "workouts", type = "csv", versioned = FALSE)
 }
 
 #' @noRd
 write_bodycomp <- function(df) {
-  utils::write.csv(df, bodycomp_path(), row.names = FALSE)
+  pins::pin_write(get_board(), df, name = "bodycomp", type = "csv", versioned = FALSE)
 }
 
 #' @noRd
 write_goals <- function(df) {
-  utils::write.csv(df, goals_path(), row.names = FALSE)
+  pins::pin_write(get_board(), df, name = "goals", type = "csv", versioned = FALSE)
+}
+
+# ── Plans (workout templates) ─────────────────────────────────────────────────
+
+plans_schema <- function() {
+  data.frame(
+    id         = character(),
+    name       = character(),
+    created_at = as.Date(character()),
+    stringsAsFactors = FALSE
+  )
+}
+
+plan_exercises_schema <- function() {
+  data.frame(
+    id           = character(),
+    plan_id      = character(),
+    exercise     = character(),
+    type         = character(),   # "strength" | "cardio"
+    sets         = integer(),
+    reps         = integer(),
+    weight_kg    = numeric(),
+    duration_min = numeric(),
+    distance_km  = numeric(),
+    order_idx    = integer(),
+    stringsAsFactors = FALSE
+  )
+}
+
+#' @noRd
+read_plans <- function() {
+  df <- pin_read_safe(get_board(), "plans", plans_schema())
+  if (nrow(df) == 0) return(plans_schema())
+  df$created_at <- as.Date(df$created_at)
+  df
+}
+
+#' @noRd
+read_plan_exercises <- function() {
+  df <- pin_read_safe(get_board(), "plan_exercises", plan_exercises_schema())
+  if (nrow(df) == 0) return(plan_exercises_schema())
+  df
+}
+
+#' @noRd
+write_plans <- function(df) {
+  pins::pin_write(get_board(), df, name = "plans", type = "csv", versioned = FALSE)
+}
+
+#' @noRd
+write_plan_exercises <- function(df) {
+  pins::pin_write(get_board(), df, name = "plan_exercises", type = "csv", versioned = FALSE)
 }
 
 # ── Helpers ────────────────────────────────────────────────────────────────────

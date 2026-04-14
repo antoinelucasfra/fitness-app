@@ -32,17 +32,30 @@ mod_workout_log_ui <- function(id) {
           # Strength fields
           shiny::conditionalPanel(
             condition = sprintf("input['%s'] === 'strength'", ns("type")),
-            shiny::selectizeInput(
-              ns("exercise"),
-              "Exercise",
-              choices = c(
-                "Squat", "Deadlift", "Bench Press", "Overhead Press",
-                "Hip Thrust", "Leg Press", "Lunges", "Romanian Deadlift",
-                "Lat Pulldown", "Seated Row", "Bicep Curl", "Tricep Pushdown",
-                "Glute Kickback", "Cable Crunch", "Plank", "Other"
+            shiny::div(
+              style = "display:flex; align-items:flex-end; gap:0.4rem;",
+              shiny::div(style = "flex:1;",
+                shiny::selectizeInput(
+                  ns("exercise"),
+                  "Exercise",
+                  choices = c(
+                    "Squat", "Deadlift", "Bench Press", "Overhead Press",
+                    "Hip Thrust", "Leg Press", "Lunges", "Romanian Deadlift",
+                    "Lat Pulldown", "Seated Row", "Bicep Curl", "Tricep Pushdown",
+                    "Glute Kickback", "Cable Crunch", "Plank", "Other"
+                  ),
+                  options = list(create = TRUE),
+                  width = "100%"
+                )
               ),
-              options = list(create = TRUE),
-              width = "100%"
+              shiny::div(style = "padding-bottom:0.15rem;",
+                shiny::actionButton(
+                  ns("info_exercise"),
+                  shiny::tags$i(class = "bi bi-info-circle"),
+                  class = "btn btn-outline-secondary btn-sm",
+                  title = "How to perform this exercise"
+                )
+              )
             ),
             shiny::fluidRow(
               shiny::column(4,
@@ -60,16 +73,29 @@ mod_workout_log_ui <- function(id) {
           # Cardio fields
           shiny::conditionalPanel(
             condition = sprintf("input['%s'] === 'cardio'", ns("type")),
-            shiny::selectizeInput(
-              ns("cardio_exercise"),
-              "Activity",
-              choices = c(
-                "Running", "Treadmill", "Cycling", "Stationary Bike",
-                "Elliptical", "Rowing Machine", "Jump Rope", "Stairmaster",
-                "Swimming", "HIIT", "Other"
+            shiny::div(
+              style = "display:flex; align-items:flex-end; gap:0.4rem;",
+              shiny::div(style = "flex:1;",
+                shiny::selectizeInput(
+                  ns("cardio_exercise"),
+                  "Activity",
+                  choices = c(
+                    "Running", "Treadmill", "Cycling", "Stationary Bike",
+                    "Elliptical", "Rowing Machine", "Jump Rope", "Stairmaster",
+                    "Swimming", "HIIT", "Other"
+                  ),
+                  options = list(create = TRUE),
+                  width = "100%"
+                )
               ),
-              options = list(create = TRUE),
-              width = "100%"
+              shiny::div(style = "padding-bottom:0.15rem;",
+                shiny::actionButton(
+                  ns("info_cardio"),
+                  shiny::tags$i(class = "bi bi-info-circle"),
+                  class = "btn btn-outline-secondary btn-sm",
+                  title = "How to perform this activity"
+                )
+              )
             ),
             shiny::fluidRow(
               shiny::column(6,
@@ -146,6 +172,16 @@ mod_workout_log_server <- function(id, workouts_rv) {
 
     # Temporary in-session builder
     session_entries <- shiny::reactiveVal(workouts_schema())
+
+    # Exercise info modals
+    shiny::observeEvent(input$info_exercise, {
+      nm <- if (!is.null(input$exercise) && nzchar(input$exercise)) input$exercise else "Squat"
+      show_exercise_modal(nm, session)
+    })
+    shiny::observeEvent(input$info_cardio, {
+      nm <- if (!is.null(input$cardio_exercise) && nzchar(input$cardio_exercise)) input$cardio_exercise else "Running"
+      show_exercise_modal(nm, session)
+    })
 
     output$session_date_label <- shiny::renderText({
       format(input$date, "%d %B %Y")

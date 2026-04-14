@@ -9,20 +9,15 @@ validate = true
 files = [
   '/app.R',
   '/renv.lock',
-  '/.posit/publish/fitness-app-H2RD.toml',
-  '/.posit/publish/deployments/deployment-3I3E.toml',
-  '/.Rbuildignore',
+  '/.posit/publish/fitness-app-dev-3CVD.toml',
+  '/.posit/publish/deployments/deployment-91B2.toml',
+  '/R',
+  '/.posit',
   '/DESCRIPTION',
   '/NAMESPACE',
-  '/R',
-  '/README.md',
-  '/inst',
-  '/man',
-  '/.gitignore',
-  '/.posit',
-  '/dev'
+  '/inst'
 ]
-title = 'fitness-app'
+title = 'fitness-app-dev'
 secrets = ['FITNESS_APP_PASSWORD']
 
 [r]

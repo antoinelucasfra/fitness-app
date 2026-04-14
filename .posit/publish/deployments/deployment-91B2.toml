@@ -2,22 +2,22 @@
 '$schema' = 'https://cdn.posit.co/publisher/schemas/posit-publishing-record-schema-v3.json'
 server_type = 'connect_cloud'
 server_url = 'https://connect.posit.cloud'
-client_version = '1.35.4'
+client_version = '1.36.0'
 created_at = ''
 dismissed_at = ''
 type = 'r-shiny'
-configuration_name = 'fitness-app-H2RD'
-id = '019cf22f-bc9e-6c84-8540-875752c0c909'
-dashboard_url = 'https://connect.posit.cloud/antoinelucasfra/content/019cf22f-bc9e-6c84-8540-875752c0c909'
-direct_url = 'https://019cf22f-bc9e-6c84-8540-875752c0c909.share.connect.posit.cloud'
-logs_url = 'https://connect.posit.cloud/antoinelucasfra/content/019cf22f-bc9e-6c84-8540-875752c0c909/history'
-deployed_at = '2026-03-15T17:58:14+01:00'
-bundle_id = '019cf26f-1aa4-e08e-a675-d8a1436e62ce'
+configuration_name = 'fitness-app-dev-3CVD'
+id = '019d8919-7196-6b70-7957-071ccd8d1e58'
+dashboard_url = 'https://connect.posit.cloud/antoinelucasfra/content/019d8919-7196-6b70-7957-071ccd8d1e58'
+direct_url = 'https://019d8919-7196-6b70-7957-071ccd8d1e58.share.connect.posit.cloud'
+logs_url = 'https://connect.posit.cloud/antoinelucasfra/content/019d8919-7196-6b70-7957-071ccd8d1e58/history'
+deployed_at = '2026-04-14T09:31:10+02:00'
+bundle_id = '019d8ae6-bf39-984d-caa9-4e5128616ba2'
 files = [
-  '.Rbuildignore',
-  '.gitignore',
   '.posit/publish/deployments/deployment-3I3E.toml',
+  '.posit/publish/deployments/deployment-91B2.toml',
   '.posit/publish/fitness-app-H2RD.toml',
+  '.posit/publish/fitness-app-dev-3CVD.toml',
   'DESCRIPTION',
   'NAMESPACE',
   'R/_disable_autoload.R',
@@ -27,20 +27,16 @@ files = [
   'R/globals.R',
   'R/mod_dashboard.R',
   'R/mod_goals.R',
+  'R/mod_planner.R',
   'R/mod_progress.R',
   'R/mod_workout_log.R',
   'R/run_app.R',
+  'R/utils_exercises.R',
   'R/utils_storage.R',
-  'README.md',
   'app.R',
-  'dev/01_start.R',
-  'dev/02_dev.R',
-  'dev/03_deploy.R',
-  'dev/run_dev.R',
   'inst/app/www/custom.css',
   'inst/app/www/favicon.ico',
   'inst/golem-config.yml',
-  'man/run_app.Rd',
   'renv.lock'
 ]
 
@@ -56,20 +52,15 @@ validate = true
 files = [
   '/app.R',
   '/renv.lock',
-  '/.posit/publish/fitness-app-H2RD.toml',
-  '/.posit/publish/deployments/deployment-3I3E.toml',
-  '/.Rbuildignore',
+  '/.posit/publish/fitness-app-dev-3CVD.toml',
+  '/.posit/publish/deployments/deployment-91B2.toml',
+  '/R',
+  '/.posit',
   '/DESCRIPTION',
   '/NAMESPACE',
-  '/R',
-  '/README.md',
-  '/inst',
-  '/man',
-  '/.gitignore',
-  '/.posit',
-  '/dev'
+  '/inst'
 ]
-title = 'fitness-app'
+title = 'fitness-app-dev'
 secrets = ['FITNESS_APP_PASSWORD']
 
 [configuration.r]
@@ -1213,6 +1204,31 @@ author = 'Kirill Müller [aut, cre] (ORCID: <https://orcid.org/0000-0002-1416-34
 'config/testthat/edition' = '3'
 'config/needs/website' = 'tidyverse/tidytemplate'
 
+[renv.packages.pins]
+package = 'pins'
+version = '1.4.2'
+source = 'Repository'
+repository = 'P3M'
+depends = ['R (>= 4.1.0)']
+hash = ''
+type = 'Package'
+title = 'Pin, Discover, and Share Resources'
+'authors@r' = 'c( person("Julia", "Silge", , "julia.silge@posit.co", role = c("cre", "aut"), comment = c(ORCID = "0000-0002-3671-836X")), person("Hadley", "Wickham", , "hadley@posit.co", role = "aut", comment = c(ORCID = "0000-0003-4757-117X")), person("Javier", "Luraschi", , "jluraschi@gmail.com", role = "aut"), person("Posit Software, PBC", role = c("cph", "fnd")) )'
+maintainer = 'Julia Silge <julia.silge@posit.co>'
+description = "Publish data sets, models, and other R objects, making it easy to share them across projects and with your colleagues. You can pin objects to a variety of \"boards\", including local folders (to share on a networked drive or with 'DropBox'), 'Posit Connect', 'AWS S3', and more."
+url = 'https://pins.rstudio.com/, https://github.com/rstudio/pins-r'
+bugreports = 'https://github.com/rstudio/pins-r/issues'
+license = 'Apache License (>= 2)'
+imports = ['cli', 'digest', 'fs', 'generics', 'glue', 'httr', 'jsonlite', 'lifecycle', 'purrr (>= 1.0.0)', 'rappdirs', 'rlang (>= 1.1.0)', 'tibble', 'whisker', 'withr (>= 2.4.3)', 'yaml']
+suggests = ['archive', 'arrow', 'AzureStor', 'covr', 'data.table', 'datasets', 'filelock', 'gitcreds', 'googleCloudStorageR', 'googledrive', 'httr2', 'ids', 'knitr', 'Microsoft365R', 'mime', 'mockery', 'nanoparquet', 'openssl', 'paws.storage', 'qs2', 'R.utils', 'rmarkdown', 'rsconnect', 'shiny', 'sodium', 'testthat (>= 3.1.7)', 'webfakes (>= 1.2.0)', 'xml2', 'zip']
+vignettebuilder = 'knitr'
+roxygennote = '7.3.3'
+encoding = 'UTF-8'
+needscompilation = 'no'
+author = 'Julia Silge [cre, aut] (ORCID: <https://orcid.org/0000-0002-3671-836X>), Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Javier Luraschi [aut], Posit Software, PBC [cph, fnd]'
+'config/testthat/edition' = '3'
+'config/needs/website' = 'tidyverse/tidytemplate'
+
 [renv.packages.pkgbuild]
 package = 'pkgbuild'
 version = '1.4.8'
@@ -1871,6 +1887,24 @@ roxygennote = '7.3.3'
 encoding = 'UTF-8'
 needscompilation = 'no'
 author = 'Simon Garnier [aut, cre], Noam Ross [ctb, cph], Bob Rudis [ctb, cph], Marco Sciaini [ctb, cph], Antônio Pedro Camargo [ctb, cph], Cédric Scherer [ctb, cph]'
+
+[renv.packages.whisker]
+package = 'whisker'
+version = '0.4.1'
+source = 'Repository'
+repository = 'P3M'
+hash = ''
+type = 'Package'
+title = '{{mustache}} for R, Logicless Templating'
+maintainer = 'Edwin de Jonge <edwindjonge@gmail.com>'
+description = "Implements 'Mustache' logicless templating."
+url = 'https://github.com/edwindj/whisker'
+license = 'GPL-3'
+suggests = ['markdown']
+roxygennote = '6.1.1'
+encoding = 'UTF-8'
+needscompilation = 'no'
+author = 'Edwin de Jonge'
 
 [renv.packages.withr]
 package = 'withr'

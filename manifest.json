@@ -1709,6 +1709,43 @@
         "RemoteSha": "1.11.1"
       }
     },
+    "pins": {
+      "Source": "P3M",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Type": "Package",
+        "Package": "pins",
+        "Title": "Pin, Discover, and Share Resources",
+        "Version": "1.4.2",
+        "Authors@R": "c(\n    person(\"Julia\", \"Silge\", , \"julia.silge@posit.co\", role = c(\"cre\", \"aut\"),\n           comment = c(ORCID = \"0000-0002-3671-836X\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\",\n           comment = c(ORCID = \"0000-0003-4757-117X\")),\n    person(\"Javier\", \"Luraschi\", , \"jluraschi@gmail.com\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Publish data sets, models, and other R objects, making it\n    easy to share them across projects and with your colleagues. You can\n    pin objects to a variety of \"boards\", including local folders (to\n    share on a networked drive or with 'DropBox'), 'Posit Connect',\n    'AWS S3', and more.",
+        "License": "Apache License (>= 2)",
+        "URL": "https://pins.rstudio.com/, https://github.com/rstudio/pins-r",
+        "BugReports": "https://github.com/rstudio/pins-r/issues",
+        "Depends": "R (>= 4.1.0)",
+        "Imports": "cli, digest, fs, generics, glue, httr, jsonlite, lifecycle,\npurrr (>= 1.0.0), rappdirs, rlang (>= 1.1.0), tibble, whisker,\nwithr (>= 2.4.3), yaml",
+        "Suggests": "archive, arrow, AzureStor, covr, data.table, datasets,\nfilelock, gitcreds, googleCloudStorageR, googledrive, httr2,\nids, knitr, Microsoft365R, mime, mockery, nanoparquet, openssl,\npaws.storage, qs2, R.utils, rmarkdown, rsconnect, shiny,\nsodium, testthat (>= 3.1.7), webfakes (>= 1.2.0), xml2, zip",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2026-03-09 13:27:10 UTC; juliasilge",
+        "Author": "Julia Silge [cre, aut] (ORCID: <https://orcid.org/0000-0002-3671-836X>),\n  Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>),\n  Javier Luraschi [aut],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Julia Silge <julia.silge@posit.co>",
+        "Repository": "RSPM",
+        "Date/Publication": "2026-03-09 14:10:02 UTC",
+        "Built": "R 4.5.0; ; 2026-03-10 04:32:23 UTC; unix",
+        "RemoteType": "standard",
+        "RemoteRef": "pins",
+        "RemotePkgRef": "pins",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/__linux__/noble/latest",
+        "RemoteReposName": "P3M",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "1.4.2"
+      }
+    },
     "pkgbuild": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -2011,6 +2048,37 @@
         "RemoteReposName": "P3M",
         "RemotePkgPlatform": "source",
         "RemoteSha": "0.3.4"
+      }
+    },
+    "renv": {
+      "Source": "P3M",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "renv",
+        "Type": "Package",
+        "Title": "Project Environments",
+        "Version": "1.1.5",
+        "Authors@R": "c(\n    person(\"Kevin\", \"Ushey\", role = c(\"aut\", \"cre\"), email = \"kevin@rstudio.com\",\n           comment = c(ORCID = \"0000-0003-2880-7407\")),\n    person(\"Hadley\", \"Wickham\", role = c(\"aut\"), email = \"hadley@rstudio.com\",\n           comment = c(ORCID = \"0000-0003-4757-117X\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n    )",
+        "Description": "A dependency management toolkit for R. Using 'renv', you can create\n    and manage project-local R libraries, save the state of these libraries to\n    a 'lockfile', and later restore your library as required. Together, these\n    tools can help make your projects more isolated, portable, and reproducible.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://rstudio.github.io/renv/, https://github.com/rstudio/renv",
+        "BugReports": "https://github.com/rstudio/renv/issues",
+        "Imports": "utils",
+        "Suggests": "BiocManager, cli, compiler, covr, cpp11, devtools, generics,\ngitcreds, jsonlite, jsonvalidate, knitr, miniUI, modules,\npackrat, pak, R6, remotes, reticulate, rmarkdown, rstudioapi,\nshiny, testthat, uuid, waldo, yaml, webfakes",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.2",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/testthat/parallel": "true",
+        "Config/testthat/start-first": "bioconductor,python,install,restore,snapshot,retrieve,remotes",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-07-24 20:47:34 UTC; kevin",
+        "Author": "Kevin Ushey [aut, cre] (ORCID: <https://orcid.org/0000-0003-2880-7407>),\n  Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>),\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
+        "Repository": "RSPM",
+        "Date/Publication": "2025-07-24 21:40:02 UTC",
+        "Built": "R 4.5.0; ; 2025-07-25 04:37:13 UTC; unix"
       }
     },
     "rlang": {
@@ -2671,6 +2739,37 @@
         "RemoteSha": "0.4.3"
       }
     },
+    "whisker": {
+      "Source": "P3M",
+      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "description": {
+        "Package": "whisker",
+        "Maintainer": "Edwin de Jonge <edwindjonge@gmail.com>",
+        "License": "GPL-3",
+        "Title": "{{mustache}} for R, Logicless Templating",
+        "Type": "Package",
+        "LazyLoad": "yes",
+        "Author": "Edwin de Jonge",
+        "Description": "Implements 'Mustache' logicless templating.",
+        "Version": "0.4.1",
+        "URL": "https://github.com/edwindj/whisker",
+        "Suggests": "markdown",
+        "RoxygenNote": "6.1.1",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-12-05 15:15:55 UTC; hornik",
+        "Repository": "RSPM",
+        "Date/Publication": "2022-12-05 15:33:50 UTC",
+        "Encoding": "UTF-8",
+        "Built": "R 4.5.0; ; 2025-04-05 03:23:49 UTC; unix",
+        "RemoteType": "standard",
+        "RemoteRef": "whisker",
+        "RemotePkgRef": "whisker",
+        "RemoteRepos": "https://packagemanager.posit.co/cran/__linux__/noble/latest",
+        "RemoteReposName": "P3M",
+        "RemotePkgPlatform": "source",
+        "RemoteSha": "0.4.1"
+      }
+    },
     "withr": {
       "Source": "CRAN",
       "Repository": "https://packagemanager.posit.co/cran/latest",
@@ -2806,22 +2905,25 @@
   },
   "files": {
     ".Rbuildignore": {
-      "checksum": "87f9d4ec0ffedff42d9aa1a7e04c6c96"
+      "checksum": "8115dcc0ea9604038d4a6d04392de785"
     },
-    "app.R": {
-      "checksum": "d456ef129e120c48c8211450db4becfc"
+    ".Renviron": {
+      "checksum": "b481389cd7cc3a8f83701c567ac42c20"
+    },
+    ".Rprofile": {
+      "checksum": "fb955c2e33806094c60c55fa4c0721ba"
+    },
+    ".github/workflows/ci.yaml": {
+      "checksum": "d924c40b3ccb881069e4edfded7a0096"
+    },
+    ".posit/publish/deployments/deployment-3I3E.toml": {
+      "checksum": "24ad64312af32d5a65e14751d38cf6aa"
+    },
+    ".posit/publish/fitness-app-H2RD.toml": {
+      "checksum": "1fe48fdffc057409151b00cc08fa3d96"
     },
     "DESCRIPTION": {
-      "checksum": "b4855d07ffc62d24df501750ef7cbd88"
-    },
-    "inst/app/www/custom.css": {
-      "checksum": "b18b2585cb9538225ac1e6698e16a47c"
-    },
-    "inst/app/www/favicon.ico": {
-      "checksum": "81560d1b906a530c87fa0acbb2f5cca4"
-    },
-    "inst/golem-config.yml": {
-      "checksum": "7d625ffc54f7db0c2c2529f366aa24ae"
+      "checksum": "71933726f10c9b4356a3cffa63c603f4"
     },
     "NAMESPACE": {
       "checksum": "b2ce72ca2085beb12993348e368f0b17"
@@ -2833,31 +2935,58 @@
       "checksum": "71c2536e65687b46711cc18e446c4f44"
     },
     "R/app_server.R": {
-      "checksum": "b9d92d1da950f7719ee8d6c86791c8d5"
+      "checksum": "a9eee5fd47a1c3dfdb011b8798eee2a2"
     },
     "R/app_ui.R": {
-      "checksum": "3162ada52118782df40dd169b8708a73"
+      "checksum": "765c1d91345c982c3205f69af5359805"
     },
     "R/globals.R": {
       "checksum": "ab9ab9528bb2894613a191322682b549"
     },
     "R/mod_dashboard.R": {
-      "checksum": "012fef09a7beb0a921872c443f069696"
+      "checksum": "ff6d1be418803214d0bb7b367be36618"
     },
     "R/mod_goals.R": {
-      "checksum": "94b6f9b73812407f1b0d1354a28f72be"
+      "checksum": "11170b2e54c1951ea41b3a5bfbaf1bb2"
+    },
+    "R/mod_planner.R": {
+      "checksum": "d34d7f01f9a393caf8953733f57d1cd3"
     },
     "R/mod_progress.R": {
       "checksum": "a8c1b67b3e497a6dbb7d5b01ecd3ad76"
     },
     "R/mod_workout_log.R": {
-      "checksum": "9329f74f5e9614cb05424dfd97ccf528"
+      "checksum": "5e9cbc564d23ba8e06f533104ee0f8ca"
     },
     "R/run_app.R": {
       "checksum": "476011bbc4ffefa824e5bfb8386d849b"
     },
+    "R/utils_exercises.R": {
+      "checksum": "c132430fd1f8db869ebc6d6d95d69f9a"
+    },
     "R/utils_storage.R": {
-      "checksum": "93f208fe4f38a4de8940973f5222756e"
+      "checksum": "144746d03f9ebad338b42c36eaa76828"
+    },
+    "TODO.md": {
+      "checksum": "5732a9f1437df41c34b709ce83955151"
+    },
+    "app.R": {
+      "checksum": "d456ef129e120c48c8211450db4becfc"
+    },
+    "how-to-deploy.md": {
+      "checksum": "d1c31ef03dcd19e6bf6cce199da7e00b"
+    },
+    "inst/app/www/custom.css": {
+      "checksum": "5b0c1df562d1b4a5ea8908a1c0efe1c2"
+    },
+    "inst/app/www/favicon.ico": {
+      "checksum": "81560d1b906a530c87fa0acbb2f5cca4"
+    },
+    "inst/golem-config.yml": {
+      "checksum": "7d625ffc54f7db0c2c2529f366aa24ae"
+    },
+    "renv.lock": {
+      "checksum": "ccd8131fb7415c2963daae3597231c58"
     }
   },
   "users": null
